@@ -12,6 +12,8 @@ public class FlipFitGymCenter {
     private int capacity;
     private int price;
     private Boolean isApproved;
+    private int noOfSlots;
+    private int openTime;
 
     /**
      * Default constructor.
@@ -31,9 +33,11 @@ public class FlipFitGymCenter {
      * @param capacity      Maximum capacity of the gym center
      * @param price         Price associated with the gym center
      * @param isApproved    Approval status of the gym center
+     * @param noOfSlots     Number of slots
+     * @param openTime      Opening time
      */
     public FlipFitGymCenter(String gymCenterId, String ownerID, String gymCenterName, String gstin, String city,
-            int capacity, int price, Boolean isApproved) {
+            int capacity, int price, Boolean isApproved, int noOfSlots, int openTime) {
         this.gymCenterId = gymCenterId;
         this.ownerID = ownerID;
         this.gymCenterName = gymCenterName;
@@ -42,6 +46,8 @@ public class FlipFitGymCenter {
         this.capacity = capacity;
         this.price = price;
         this.isApproved = isApproved;
+        this.noOfSlots = noOfSlots;
+        this.openTime = openTime;
     }
 
     /**
@@ -186,5 +192,21 @@ public class FlipFitGymCenter {
      */
     public void setApproved(Boolean approved) {
         isApproved = approved;
+    }
+
+    public int getNoOfSlots() {
+        return noOfSlots;
+    }
+
+    public void setNoOfSlots(int noOfSlots) {
+        this.noOfSlots = noOfSlots;
+    }
+
+    public int getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(int openTime) {
+        this.openTime = openTime;
     }
 }

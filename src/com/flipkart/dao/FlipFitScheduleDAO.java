@@ -69,7 +69,7 @@ public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
                 String scheduleId = rs.getString("scheduleId");
                 String slotId = rs.getString("slotId");
                 int availability = rs.getInt("availability");
-                LocalDate localDate = LocalDate.parse(date.toString());
+                LocalDate localDate = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
                 FlipFitSchedule schedule = new FlipFitSchedule(localDate, slotId, availability);
                 schedule.setScheduleID(scheduleId);
                 response.add(schedule);

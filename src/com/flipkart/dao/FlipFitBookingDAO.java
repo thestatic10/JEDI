@@ -2,6 +2,7 @@ package com.flipkart.dao;
 
 import com.flipkart.bean.FlipFitBooking;
 import com.flipkart.bean.FlipFitSchedule;
+import com.flipkart.bean.FlipFitSlot;
 import com.flipkart.utils.UserPlan;
 
 import java.time.LocalTime;
@@ -15,6 +16,7 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
 
     private List<FlipFitBooking> bookingList = new ArrayList<>();
     private FlipFitScheduleDAO flipFitScheduleDAO = new FlipFitScheduleDAO();
+    private FlipFitSlotDAO flipFitSlotDAO = new FlipFitSlotDAO();
 
     public void addBooking(String userName, String scheduleID) {
         try {
@@ -44,13 +46,13 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
             List<FlipFitBooking> customerBookings = getBookingByCustomerId(customerId);
             for (FlipFitBooking booking : customerBookings) {
                 FlipFitSchedule schedule = flipFitScheduleDAO.getSchedule(booking.getScheduleID());
+                FlipFitSlot slot = flipFitSlotDAO.getSlotById(schedule.getSlotId());
                 UserPlan userPlan = new UserPlan(
-                        schedule.getSlotId(),
-                        schedule.getSlotId(),
-                        schedule.getDate().atStartOfDay().toLocalTime(),
+                        slot.getSlotId(),
+                        slot.getCenterID(),
+                        slot.getTime(),
                         schedule.getScheduleID(),
-                        schedule.getDate()
-                );
+                        schedule.getDate());
                 allUserPlan.add(userPlan);
             }
         } catch (Exception e) {
@@ -59,14 +61,14 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         return allUserPlan;
     }
 
-
     public boolean checkBookingOverlap(String customerId, Date date, LocalTime localTime) {
         LocalTime endTime = localTime.plusHours(1);
         List<UserPlan> allUserPlan = getCustomerPlan(customerId);
 
         // Use stream to iterate over allUserPlan and check for overlap
         return allUserPlan.stream()
-                .filter(userPlan -> userPlan.getDate().equals(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()))
+                .filter(userPlan -> userPlan.getDate()
+                        .equals(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()))
                 .anyMatch(userPlan -> {
                     LocalTime bookedStartTime = userPlan.getTime();
                     LocalTime bookedEndTime = bookedStartTime.plusHours(1);
@@ -86,7 +88,6 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
             System.out.println("Could not cancel booking for BookingId: " + bookingID);
         }
     }
-
 
     public FlipFitBooking getBookingByBookingId(String bookingId) {
         Optional<FlipFitBooking> optionalBooking = bookingList.stream()

@@ -95,6 +95,12 @@ public class FlipFitGymOwnerMenu {
                     System.out.println("Enter price: ");
                     int price = scanner.nextInt();
 
+                    System.out.println("Enter Number of Slots: ");
+                    int noOfSlots = scanner.nextInt();
+
+                    System.out.println("Enter Opening Time (Hour in 0-23 format): ");
+                    int openTime = scanner.nextInt();
+
                     gymCentreService.addCenter(
                             new FlipFitGymCenter(
                                     gymId,
@@ -104,7 +110,9 @@ public class FlipFitGymOwnerMenu {
                                     city,
                                     capacity,
                                     price,
-                                    false));
+                                    false,
+                                    noOfSlots,
+                                    openTime));
                     break;
 
                 case 3:

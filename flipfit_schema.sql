@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS FlipFit;
-USE FlipFit;
+CREATE DATABASE IF NOT EXISTS FlipFitNew;
+USE FlipFitNew;
 
 -- -----------------------------------------------------
 -- Table `GymOwner`
@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS `GymCentre` (
   `city` VARCHAR(100) NOT NULL,
   `capacity` INT NOT NULL,
   `price` INT NOT NULL,
+  `noOfSlots` INT NOT NULL DEFAULT 10,
+  `openTime` INT NOT NULL DEFAULT 6,
   `isApproved` TINYINT(1) DEFAULT 0,
   PRIMARY KEY (`centreId`),
   FOREIGN KEY (`ownerId`) REFERENCES `GymOwner`(`Id`) ON DELETE CASCADE
