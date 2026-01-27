@@ -38,7 +38,9 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved"));
+                        rs.getBoolean("isApproved"),
+                        rs.getInt("noOfSlots"),
+                        rs.getInt("openTime"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 allGymCentres.add(gymCentre);
             }
@@ -72,7 +74,9 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved"));
+                        rs.getBoolean("isApproved"),
+                        rs.getInt("noOfSlots"),
+                        rs.getInt("openTime"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 allGymCentres.add(gymCentre);
             }
@@ -99,6 +103,8 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             gymCentre.setCity(rs.getString("city"));
             gymCentre.setCapacity(rs.getInt("capacity"));
             gymCentre.setPrice(rs.getInt("price"));
+            gymCentre.setNoOfSlots(rs.getInt("noOfSlots"));
+            gymCentre.setOpenTime(rs.getInt("openTime"));
             gymCentre.setApproved(rs.getBoolean("isApproved"));
             stmt.close();
         } catch (SQLException exp) {
@@ -126,6 +132,8 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement.setInt(6, centre.getCapacity());
             statement.setInt(7, centre.getPrice());
             statement.setBoolean(8, centre.isApproved());
+            statement.setInt(9, centre.getNoOfSlots());
+            statement.setInt(10, centre.getOpenTime());
 
             statement.execute();
         } catch (Exception e) {
@@ -151,7 +159,9 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved"));
+                        rs.getBoolean("isApproved"),
+                        rs.getInt("noOfSlots"),
+                        rs.getInt("openTime"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 pendingList.add(gymCentre);
             }
@@ -227,7 +237,9 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved"));
+                        rs.getBoolean("isApproved"),
+                        rs.getInt("noOfSlots"),
+                        rs.getInt("openTime"));
                 allCentreByCity.add(gymCentre);
             }
             // System.out.println("The gym centre has been approved!");

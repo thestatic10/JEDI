@@ -8,6 +8,7 @@ import com.flipkart.bean.FlipFitSlot;
 import com.flipkart.business.FlipFitCustomerInterface;
 import com.flipkart.business.FlipFitCustomerService;
 import com.flipkart.utils.Util;
+import com.flipkart.utils.UserPlan;
 
 import java.util.Date;
 import java.text.ParseException;
@@ -18,7 +19,7 @@ import java.util.Scanner;
 import static com.flipkart.utils.Util.*;
 
 public class FlipFitCustomerMenu {
-    private FlipFitCustomerInterface customerService  =  new FlipFitCustomerService();
+    private FlipFitCustomerInterface customerService = new FlipFitCustomerService();
     Scanner scanner = new Scanner(System.in);
 
     public boolean customerLogin(String userName, String password) throws ParseException {
@@ -31,7 +32,6 @@ public class FlipFitCustomerMenu {
         }
         return true;
     }
-
 
     public void register() throws ParseException {
         System.out.println("Enter your Username");
@@ -49,7 +49,7 @@ public class FlipFitCustomerMenu {
         System.out.println("Enter your Card Number");
         String cardNumber = scanner.next();
 
-        customerService.registerCustomer(userName,password,email,phoneNumber,cardNumber);
+        customerService.registerCustomer(userName, password, email, phoneNumber, cardNumber);
         customerClientMainPage(userName);
     }
 
@@ -58,51 +58,63 @@ public class FlipFitCustomerMenu {
         String location = scanner.next();
         List<FlipFitGymCenter> centreListByLocation = customerService.getAllGymCenterDetailsByCity(location);
         Util.printGymCentres(centreListByLocation);
-        if(centreListByLocation.isEmpty()){
-            System.out.println("There are no available GYM Centres in " + location + ". Please Select some other location");
+        if (centreListByLocation.isEmpty()) {
+            System.out.println(
+                    "There are no available GYM Centres in " + location + ". Please Select some other location");
             bookSlotSubMenu(userName);
             return;
         }
         System.out.print("Choose a gymCentre ID to proceed: ");
         String chosenGym = scanner.next();
         Date date = selectDate();
-        chooseSlot(chosenGym,userName,date,chosenGym);
+        chooseSlot(chosenGym, userName, date, chosenGym);
     }
 
-    private void chooseSlot(String gymCentreId,String userName,Date sqlDate,String centreId) throws ParseException {
+    private void chooseSlot(String gymCentreId, String userName, Date sqlDate, String centreId) throws ParseException {
         System.out.println("Choose from the Below Slots");
-        List<FlipFitSlot> availableSlots = customerService.getAvailableSlots(gymCentreId,sqlDate);
+        List<FlipFitSlot> availableSlots = customerService.getAvailableSlots(gymCentreId, sqlDate);
         printSlots(availableSlots);
-        if(availableSlots.isEmpty()){
+        if (availableSlots.isEmpty()) {
             System.out.println("There are no available slots in the " + gymCentreId + ". Please Select some other gym");
             bookSlotSubMenu(userName);
             return;
         }
         System.out.println("Enter SlotID");
         String slotID = scanner.next();
-        if(!customerService.bookSlot(userName,sqlDate,slotID,centreId)) chooseSlot(gymCentreId, userName, sqlDate,centreId);
+        if (!customerService.bookSlot(userName, sqlDate, slotID, centreId))
+            chooseSlot(gymCentreId, userName, sqlDate, centreId);
     }
 
-    private void printbookingsSubMenu(String userName){
+    private void printbookingsSubMenu(String userName) {
         System.out.println("Bookings : ");
-        List<FlipFitBooking> allBookingList= customerService.getCustomerBookings(userName);
+        List<FlipFitBooking> allBookingList = customerService.getCustomerBookings(userName);
         System.out.println("-----");
         System.out.printf("%-8s\t", "BOOKING-ID");
         System.out.printf("%47s\t\n", "SCHEDULE-ID");
         System.out.println("-----");
-        for(FlipFitBooking booking: allBookingList) {
+        for (FlipFitBooking booking : allBookingList) {
             System.out.printf("%-8s\t", booking.getBookingID());
             System.out.printf("%-8s\t\n", booking.getScheduleID());
         }
         System.out.println("----");
     }
 
-    private void cancelBookingSubMenu(String userName){
+    private void cancelBookingSubMenu(String userName) {
         printbookingsSubMenu(userName);
         System.out.println("Select the Booking you want to cancel: ");
         String bookingId = scanner.next();
         customerService.cancelBookingbyID(bookingId);
 
+    }
+
+    private void viewScheduleSubMenu(String userName) throws ParseException {
+        Date date = selectDate();
+        List<UserPlan> userPlans = customerService.getCustomerPlan(userName, date);
+        System.out.println("Schedule for " + date + " :");
+        System.out.printf("%-15s\t%-15s\t%-15s\t\n", "Centre-ID", "Slot-ID", "Time");
+        for (UserPlan plan : userPlans) {
+            System.out.printf("%-15s\t%-15s\t%-15s\t\n", plan.getCentreID(), plan.getSlotId(), plan.getTime());
+        }
     }
 
     public static void getCustomerMenu() {
@@ -113,13 +125,15 @@ public class FlipFitCustomerMenu {
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = currentTime.format(myFormat);
-        System.out.println("WELCOME "+ userName+" !!\nPlease choose among the following options\nLogin TIME: "+ currentTime);
-        while(true){
-            System.out.println("1. View My Profile \n2. Book a slot in a Gym \n3. View Bookings\n4. Cancel Bookings\n5. Go Back to previous menu");
+        System.out.println(
+                "WELCOME " + userName + " !!\nPlease choose among the following options\nLogin TIME: " + currentTime);
+        while (true) {
+            System.out.println(
+                    "1. View My Profile \n2. Book a slot in a Gym \n3. View Bookings\n4. Cancel Bookings\n5. Go Back to previous menu\n6. View My Schedule");
             int choice = scanner.nextInt();
-            switch(choice){
+            switch (choice) {
                 case 1:
-                    FlipFitCustomer customer= customerService.viewMyProfile(userName);
+                    FlipFitCustomer customer = customerService.viewMyProfile(userName);
                     printCustomerProfile(customer);
                     break;
                 case 2:
@@ -134,6 +148,9 @@ public class FlipFitCustomerMenu {
                 case 5:
                     System.out.println("Taking back to previous menu");
                     return;
+                case 6:
+                    viewScheduleSubMenu(userName);
+                    break;
                 default:
                     System.out.println("Not a valid choice");
                     break;

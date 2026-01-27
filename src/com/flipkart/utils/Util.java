@@ -84,10 +84,10 @@ public class Util {
     }
 
     public static Date selectDate() throws ParseException {
-        // Select Date
-        // System.out.print("Enter Date (dd/MM/yyyy): ");
+        System.out.print("Enter Date (dd/MM/yyyy): ");
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String dateStr = scanner.next();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        return date;
+        return sdf.parse(dateStr);
     }
 }

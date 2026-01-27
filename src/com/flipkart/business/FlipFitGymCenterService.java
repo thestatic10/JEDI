@@ -28,6 +28,24 @@ public class FlipFitGymCenterService implements FlipFitGymCenterInterface {
     public void addCenter(FlipFitGymCenter gymCentre) {
         // takes gymCenter details
         flipFitGymCenterDAO.addGymCentre(gymCentre);
+
+        // Auto-generate slots
+        java.util.List<FlipFitSlot> slots = new java.util.ArrayList<>();
+        int openTime = gymCentre.getOpenTime();
+        int noOfSlots = gymCentre.getNoOfSlots();
+
+        for (int i = 0; i < noOfSlots; i++) {
+            // Generate UUID for slot
+            String slotId = java.util.UUID.randomUUID().toString();
+            // Calculate time: openTime + i hours
+            java.time.LocalTime time = java.time.LocalTime.of(openTime + i, 0); // Assuming 1 hour slots
+
+            FlipFitSlot slot = new FlipFitSlot(slotId, gymCentre.getGymCenterId(), time);
+            slots.add(slot);
+        }
+
+        FlipFitSlotInterface slotService = new FlipFitSlotService();
+        slotService.addSlotsForGym(gymCentre.getGymCenterId(), slots);
     }
 
     public void requestGymCentreApproval(String gymCentreId) {
