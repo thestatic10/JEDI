@@ -17,7 +17,7 @@ public class FlipFitGymCenterService implements FlipFitGymCenterInterface {
         return flipFitGymCenterDAO.getAllCentresByOwmerId(gymOwnerId);
     }
 
-    public List<FlipFitGymCenter> getCentresByCity(String city){
+    public List<FlipFitGymCenter> getCentresByCity(String city) {
         return flipFitGymCenterDAO.getGymCentreListByCity(city);
     }
 
@@ -26,11 +26,11 @@ public class FlipFitGymCenterService implements FlipFitGymCenterInterface {
     }
 
     public void addCenter(FlipFitGymCenter gymCentre) {
-        //takes gymCenter details
+        // takes gymCenter details
         flipFitGymCenterDAO.addGymCentre(gymCentre);
     }
 
-    public void requestGymCentreApproval(String gymCentreId){
+    public void requestGymCentreApproval(String gymCentreId) {
         flipFitGymCenterDAO.sendCentreApprovalRequest(gymCentreId);
     }
 

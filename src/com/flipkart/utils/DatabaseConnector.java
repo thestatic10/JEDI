@@ -1,6 +1,5 @@
 package com.flipkart.utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +20,12 @@ public class DatabaseConnector {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 // String url = "jdbc:mysql://localhost:3306/Flipfit";//flipfit is the name of
                 // database 3306 is the port no. of mysql
-                FileInputStream inputStream = new FileInputStream("com/flipkart/utils/dbConfig.properties");
+                java.io.InputStream inputStream = DatabaseConnector.class.getClassLoader()
+                        .getResourceAsStream("com/flipkart/utils/dbConfig.properties");
+                if (inputStream == null) {
+                    throw new java.io.FileNotFoundException(
+                            "Property file 'com/flipkart/utils/dbConfig.properties' not found in the classpath");
+                }
                 Properties newProp = new Properties();
                 newProp.load(inputStream);
                 Connection connection = DriverManager.getConnection(newProp.getProperty("url"),

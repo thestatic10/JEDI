@@ -71,4 +71,9 @@ public class SQLConstants {
 
 
     public static final String GET_USERPLAN_BY_CUSTOMER_ID = "select * from slot join schedule where slot.slotId=schedule.slotId and schedule.scheduleId=?";
+
+    // ------------------------ ADMIN ------------------------
+    public static final String ADD_NEW_ADMIN = "INSERT INTO FlipFit.Admin (Id, name, password, email) VALUES (?, ?, ?, ?);";
+    public static final String ADMIN_LOGIN_QUERY = "SELECT * FROM FlipFit.Admin WHERE name = ? AND password = ?";
+    public static final String GET_ADMIN_BY_ID = "SELECT * FROM FlipFit.Admin WHERE name = ?;";
 }

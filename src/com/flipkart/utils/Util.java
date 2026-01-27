@@ -23,10 +23,10 @@ public class Util {
         System.out.printf("%-8s\t", "PRICE");
         System.out.printf("%-8s\t\n", "APPROVED");
         System.out.println("-----");
-        for(FlipFitGymCenter gymCenter: centreListByLocation) {
+        for (FlipFitGymCenter gymCenter : centreListByLocation) {
             System.out.printf("%-8s\t", gymCenter.getGymCenterId());
             System.out.printf("%-8s\t", gymCenter.getOwnerID());
-            System.out.printf("%-8s\t",gymCenter.getGymCenterName());
+            System.out.printf("%-8s\t", gymCenter.getGymCenterName());
             System.out.printf("%-8s\t", gymCenter.getGstin());
             System.out.printf("%-8s\t", gymCenter.getCity());
             System.out.printf("%-8s\t", gymCenter.getCapacity());
@@ -36,7 +36,7 @@ public class Util {
         System.out.println("-----");
     }
 
-    public static void printOwnerList(List<FlipFitGymOwner> gymOwnerList){
+    public static void printOwnerList(List<FlipFitGymOwner> gymOwnerList) {
         System.out.println("-----");
         System.out.printf("%-8s\t", "ID");
         System.out.printf("%-8s\t", "NAME");
@@ -45,17 +45,14 @@ public class Util {
         System.out.printf("%23s\t\n", "IS-APPROVED");
         System.out.println("-----");
         System.out.println("");
-        for(FlipFitGymOwner gymOwner: gymOwnerList) {
+        for (FlipFitGymOwner gymOwner : gymOwnerList) {
             System.out.printf("%-8s\t", gymOwner.getUserID());
             System.out.printf("%-8s\t", gymOwner.getUserName());
             System.out.printf("%-8s\t", gymOwner.getEmail());
             System.out.printf("%-8s\t", gymOwner.getPanNumber());
-            if(gymOwner.isApproved())
-            {
+            if (gymOwner.isApproved()) {
                 System.out.println("Yes\n");
-            }
-            else if(!gymOwner.isApproved())
-            {
+            } else if (!gymOwner.isApproved()) {
                 System.out.println("No\n");
             } else {
                 System.out.println("Pending\n");
@@ -64,7 +61,7 @@ public class Util {
         System.out.println("----");
     }
 
-    public static void printCustomerProfile(FlipFitCustomer customer){
+    public static void printCustomerProfile(FlipFitCustomer customer) {
         System.out.println("------------------------------------------------------------------------");
         System.out.println("USER ID: " + customer.getUserID());
         System.out.println("USER NAME: " + customer.getUserName());
@@ -74,12 +71,12 @@ public class Util {
         System.out.println("------------------------------------------------------------------------");
     }
 
-    public static void printSlots(List<FlipFitSlot> slots){
+    public static void printSlots(List<FlipFitSlot> slots) {
         System.out.println("-----");
         System.out.printf("%-8s\t", "SLOT-ID");
         System.out.printf("%-8s\t\n", "SLOT-TIME");
         System.out.println("----");
-        for(FlipFitSlot slot: slots) {
+        for (FlipFitSlot slot : slots) {
             System.out.printf("%-8s\t", slot.getSlotId());
             System.out.printf("%-8s\t\n", slot.getTime());
         }
@@ -87,8 +84,8 @@ public class Util {
     }
 
     public static Date selectDate() throws ParseException {
-        //Select Date
-//        System.out.print("Enter Date (dd/MM/yyyy): ");
+        // Select Date
+        // System.out.print("Enter Date (dd/MM/yyyy): ");
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         return date;

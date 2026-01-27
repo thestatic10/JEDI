@@ -19,7 +19,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
     private Connection conn = null;
     private PreparedStatement statement = null;
 
-    public FlipFitGymCenterDAO()  {
+    public FlipFitGymCenterDAO() {
     }
 
     public List<FlipFitGymCenter> viewAllGymCenters() {
@@ -29,7 +29,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement = conn.prepareStatement(FETCH_ALL_GYM_CENTRES);
 
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 FlipFitGymCenter gymCentre = new FlipFitGymCenter(
                         rs.getString("centreId"),
                         rs.getString("ownerId"),
@@ -38,8 +38,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved")
-                );
+                        rs.getBoolean("isApproved"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 allGymCentres.add(gymCentre);
             }
@@ -55,7 +54,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
     }
 
     // api call to retrieve all gym centres and status
-    public List<FlipFitGymCenter> getAllCentresByOwmerId(String gymOwnerId)  {
+    public List<FlipFitGymCenter> getAllCentresByOwmerId(String gymOwnerId) {
 
         List<FlipFitGymCenter> allGymCentres = new ArrayList<>();
         try {
@@ -64,7 +63,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement.setString(1, gymOwnerId);
 
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 FlipFitGymCenter gymCentre = new FlipFitGymCenter(
                         rs.getString("centreId"),
                         rs.getString("ownerId"),
@@ -73,8 +72,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved")
-                );
+                        rs.getBoolean("isApproved"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 allGymCentres.add(gymCentre);
             }
@@ -86,8 +84,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         return allGymCentres;
     }
 
-
-    public FlipFitGymCenter getGymCentreByCentreId(String gymCentreId){
+    public FlipFitGymCenter getGymCentreByCentreId(String gymCentreId) {
         FlipFitGymCenter gymCentre = new FlipFitGymCenter();
         try {
             Connection conn = DatabaseConnector.connect();
@@ -118,12 +115,13 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             conn = DatabaseConnector.connect();
             System.out.println("Adding gym centre....");
 
-            //    INSERT INTO FlipFit.GymCentre (centreId, ownerId, centreName, gstin, city, capacity, price, isApproved)
+            // INSERT INTO FlipFit.GymCentre (centreId, ownerId, centreName, gstin, city,
+            // capacity, price, isApproved)
             statement = conn.prepareStatement(SQLConstants.ADD_GYM_CENTRE_QUERY);
-            statement.setString(1,centre.getGymCenterId());
-            statement.setString(2,centre.getOwnerID());
+            statement.setString(1, centre.getGymCenterId());
+            statement.setString(2, centre.getOwnerID());
             statement.setString(3, centre.getGymCenterName());
-            statement.setString(4,centre.getGstin());
+            statement.setString(4, centre.getGstin());
             statement.setString(5, centre.getCity());
             statement.setInt(6, centre.getCapacity());
             statement.setInt(7, centre.getPrice());
@@ -144,7 +142,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement = conn.prepareStatement(SQLConstants.FETCH_ALL_PENDING_GYM_CENTRES_QUERY);
 
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 FlipFitGymCenter gymCentre = new FlipFitGymCenter(
                         rs.getString("centreId"),
                         rs.getString("ownerId"),
@@ -153,12 +151,11 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved")
-                );
+                        rs.getBoolean("isApproved"));
                 gymCentre.setApproved(rs.getBoolean("isApproved"));
                 pendingList.add(gymCentre);
             }
-            //conn.close();
+            // conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -166,7 +163,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
     }
 
     public void validateGymCentre(String gymCentreId, boolean isApproved) {
-//        System.out.println("IN VALIDATE GYM CENTRE");
+        // System.out.println("IN VALIDATE GYM CENTRE");
         try {
             conn = DatabaseConnector.connect();
             System.out.println("Fetching gyms centres..");
@@ -175,7 +172,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement.setBoolean(1, isApproved);
             statement.setString(2, gymCentreId);
             statement.executeUpdate();
-//            System.out.println("The gym centre has been approved!");
+            // System.out.println("The gym centre has been approved!");
         } catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
@@ -183,30 +180,34 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             // Handle errors for Class.forName
             e.printStackTrace();
         }
-//        for(GymCentre gymCentre : gymCentreList) {
-//            if(gymCentre.getGymCentreID().equals(gymCentreId)) {
-//                gymCentre.setApproved(isApproved);
-//            }
-//        }
-//        for(GymCentre gymCentre : pendingGymCentreList) {
-//            if(gymCentre.getGymCentreID().equals(gymCentreId)) {
-//                pendingGymCentreList.remove(gymCentre);
-//            }
-//        }
+        // for(GymCentre gymCentre : gymCentreList) {
+        // if(gymCentre.getGymCentreID().equals(gymCentreId)) {
+        // gymCentre.setApproved(isApproved);
+        // }
+        // }
+        // for(GymCentre gymCentre : pendingGymCentreList) {
+        // if(gymCentre.getGymCentreID().equals(gymCentreId)) {
+        // pendingGymCentreList.remove(gymCentre);
+        // }
+        // }
     }
 
-    public void sendCentreApprovalRequest(String gymCentreId){
+    public void sendCentreApprovalRequest(String gymCentreId) {
         try {
             conn = DatabaseConnector.connect();
             System.out.println("Sending gym centre approval request..");
-            // SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY="Update GymCentre Set isApproved=? WHERE centreId=?";
+            // SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY="Update GymCentre Set isApproved=? WHERE
+            // centreId=?";
             statement = conn.prepareStatement(SQLConstants.SQL_APPROVE_GYM_CENTRE_BY_ID_QUERY);
-            statement.setInt(1,0);
+            statement.setInt(1, 0);
             statement.setString(2, gymCentreId);
             statement.executeUpdate();
 
-        } catch (SQLException se) { se.printStackTrace(); }
-        catch (Exception e) { e.printStackTrace(); }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public List<FlipFitGymCenter> getGymCentreListByCity(String city) {
@@ -217,7 +218,7 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             statement = conn.prepareStatement(SQLConstants.FETCH_GYM_CENTRES_BY_CITY);
             statement.setString(1, city);
             ResultSet rs = statement.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 FlipFitGymCenter gymCentre = new FlipFitGymCenter(
                         rs.getString("centreId"),
                         rs.getString("ownerId"),
@@ -226,11 +227,10 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
                         rs.getString("city"),
                         rs.getInt("capacity"),
                         rs.getInt("price"),
-                        rs.getBoolean("isApproved")
-                );
+                        rs.getBoolean("isApproved"));
                 allCentreByCity.add(gymCentre);
             }
-            //System.out.println("The gym centre has been approved!");
+            // System.out.println("The gym centre has been approved!");
         } catch (SQLException se) {
             // Handle errors for JDBC
             se.printStackTrace();
@@ -238,64 +238,65 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             // Handle errors for Class.forName
             e.printStackTrace();
         }
-//        for(GymCentre gymCentre: gymCentreList){
-//            if(gymCentre.getCity().equals(city)){
-//                allCentreByCity.add(gymCentre);
-//            }
-//        }
+        // for(GymCentre gymCentre: gymCentreList){
+        // if(gymCentre.getCity().equals(city)){
+        // allCentreByCity.add(gymCentre);
+        // }
+        // }
         return allCentreByCity;
     }
-//    private Map<String, GymCenter> gymCentres = new HashMap<>();
-//    private Map<String, List<GymCenter>> ownerGyms = new HashMap<>();
-//
-//    public GymCenterDAO() {
-//    }
-//
-//    public List<GymCenter> getAllCentresByOwnerId(String gymOwnerId) {
-//        return ownerGyms.getOrDefault(gymOwnerId, new ArrayList<>());
-//    }
-//
-//    public GymCenter getGymCentreByCentreId(String gymCentreId) {
-//        return gymCentres.get(gymCentreId);
-//    }
-//
-//    public void addGymCentre(GymCenter centre) {
-//        gymCentres.put(centre.getGymCenterId(), centre);
-//        ownerGyms.computeIfAbsent(centre.getOwnerID(), k -> new ArrayList<>()).add(centre);
-//    }
-//
-//    public List<GymCenter> getPendingGymCentreList() {
-//        List<GymCenter> pendingList = new ArrayList<>();
-//        for (GymCenter centre : gymCentres.values()) {
-//            if (!centre.isApproved()) {
-//                pendingList.add(centre);
-//            }
-//        }
-//        return pendingList;
-//    }
-//
-//    public void validateGymCentre(String gymCentreId, boolean isApproved) {
-//        GymCenter centre = gymCentres.get(gymCentreId);
-//        if (centre != null) {
-//            centre.setApproved(isApproved);
-//        }
-//    }
-//
-//    public void sendCenterApprovalRequest(String gymCentreId) {
-//        GymCenter centre = gymCentres.get(gymCentreId);
-//        if (centre != null) {
-//            centre.setApproved(true);
-//            System.out.println("Gym Center Approved!");
-//        }
-//    }
-//
-//    public List<GymCenter> getGymCentreListByCity(String city) {
-//        List<GymCenter> allCentreByCity = new ArrayList<>();
-//        for (GymCenter centre : gymCentres.values()) {
-//            if (centre.getCity().equalsIgnoreCase(city)) {
-//                allCentreByCity.add(centre);
-//            }
-//        }
-//        return allCentreByCity;
-//    }
+    // private Map<String, GymCenter> gymCentres = new HashMap<>();
+    // private Map<String, List<GymCenter>> ownerGyms = new HashMap<>();
+    //
+    // public GymCenterDAO() {
+    // }
+    //
+    // public List<GymCenter> getAllCentresByOwnerId(String gymOwnerId) {
+    // return ownerGyms.getOrDefault(gymOwnerId, new ArrayList<>());
+    // }
+    //
+    // public GymCenter getGymCentreByCentreId(String gymCentreId) {
+    // return gymCentres.get(gymCentreId);
+    // }
+    //
+    // public void addGymCentre(GymCenter centre) {
+    // gymCentres.put(centre.getGymCenterId(), centre);
+    // ownerGyms.computeIfAbsent(centre.getOwnerID(), k -> new
+    // ArrayList<>()).add(centre);
+    // }
+    //
+    // public List<GymCenter> getPendingGymCentreList() {
+    // List<GymCenter> pendingList = new ArrayList<>();
+    // for (GymCenter centre : gymCentres.values()) {
+    // if (!centre.isApproved()) {
+    // pendingList.add(centre);
+    // }
+    // }
+    // return pendingList;
+    // }
+    //
+    // public void validateGymCentre(String gymCentreId, boolean isApproved) {
+    // GymCenter centre = gymCentres.get(gymCentreId);
+    // if (centre != null) {
+    // centre.setApproved(isApproved);
+    // }
+    // }
+    //
+    // public void sendCenterApprovalRequest(String gymCentreId) {
+    // GymCenter centre = gymCentres.get(gymCentreId);
+    // if (centre != null) {
+    // centre.setApproved(true);
+    // System.out.println("Gym Center Approved!");
+    // }
+    // }
+    //
+    // public List<GymCenter> getGymCentreListByCity(String city) {
+    // List<GymCenter> allCentreByCity = new ArrayList<>();
+    // for (GymCenter centre : gymCentres.values()) {
+    // if (centre.getCity().equalsIgnoreCase(city)) {
+    // allCentreByCity.add(centre);
+    // }
+    // }
+    // return allCentreByCity;
+    // }
 }

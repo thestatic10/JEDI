@@ -8,10 +8,18 @@ public class FlipFitAdmin extends FlipFitUser {
 
     /**
      * Default constructor for creating an admin user.
-     * Initializes with default values for admin user ID, username, email, password,
-     * and assigns the role as ADMIN.
      */
     public FlipFitAdmin() {
-        super("admin", "admin", "admin@flipfit.com", "admin", FlipFitRole.ADMIN);
+    }
+
+    /**
+     * Parameterized constructor for creating an admin user.
+     * @param userId User ID of the admin
+     * @param userName Username of the admin
+     * @param email Email of the admin
+     * @param password Password of the admin
+     */
+    public FlipFitAdmin(String userId, String userName, String email, String password) {
+        super(userId, userName, email, password, FlipFitRole.ADMIN);
     }
 }

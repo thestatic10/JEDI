@@ -80,6 +80,12 @@ CREATE TABLE IF NOT EXISTS `Booking` (
 );
 
 -- -----------------------------------------------------
--- Insert Admin (Optional, usually handled in code or pre-seeded)
+-- Table `Admin`
 -- -----------------------------------------------------
--- Note: The current Admin login in the code is hardcoded/mocked and does not query a database table.
+CREATE TABLE IF NOT EXISTS `Admin` (
+  `Id` VARCHAR(255) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`Id`)
+);
