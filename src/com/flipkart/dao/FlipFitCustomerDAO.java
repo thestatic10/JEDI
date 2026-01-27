@@ -61,46 +61,38 @@ public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
             PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID);
             stmt.setString(1, userName);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            customer.setEmail(rs.getString("email"));
-            customer.setUserID(rs.getString("Id"));
-            customer.setPassword(rs.getString("password"));
-            customer.setUserName(rs.getString("name"));
-            customer.setCustomerPhone(rs.getString("phone"));
-            customer.setCardDetails(rs.getString("cardDetails"));
-
+            if(rs.next()) {
+                customer.setEmail(rs.getString("email"));
+                customer.setUserID(rs.getString("Id"));
+                customer.setPassword(rs.getString("password"));
+                customer.setUserName(rs.getString("name"));
+                customer.setCustomerPhone(rs.getString("phone"));
+                customer.setCardDetails(rs.getString("cardDetails"));
+            }
             stmt.close();
         } catch (SQLException exp) {
             exp.printStackTrace();
-        } catch (Exception exp) {
-            exp.printStackTrace();
         }
-
         return customer;
     }
-//    private Map<String, Customer> customers = new HashMap<>();
-//
-//
-//    public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) {
-//        if (customers.containsKey(userName)) {
-//            System.out.println("User already exists.");
-//        }
-//        Customer customer = new Customer(UUID.randomUUID().toString(), userName, password, email, phoneNumber, cardNumber);
-//        customers.put(userName, customer);
-//    }
-//
-//    public boolean isUserValid(String userName, String password) {
-//        Customer customer = customers.get(userName);
-//        if (customer != null && customer.getPassword().equals(password)) {
-//            return true;
-//        } else {
-//            System.out.println("User is Invalid. Try again.");
-//            return false;
-//        }
-//    }
-//
-//    public Customer getCustomerById(String userName) {
-//        return customers.get(userName);
-//    }
-}
 
+    @Override
+    public boolean changePassword(String userName, String oldPassword, String newPassword) {
+        try {
+            Connection conn = DatabaseConnector.connect();
+            // Using UPDATE_PASSWORD_QUERY: UPDATE Customer SET password = ? WHERE name = ? AND password = ?
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_PASSWORD_QUERY);
+            stmt.setString(1, newPassword);
+            stmt.setString(2, userName);
+            stmt.setString(3, oldPassword);
+
+            int rowsUpdated = stmt.executeUpdate();
+            stmt.close();
+
+            return rowsUpdated > 0; // Returns true if the user existed and password matched
+        } catch (SQLException e) {
+            System.out.println("Database error during password change: " + e.getMessage());
+        }
+        return false;
+    }
+}

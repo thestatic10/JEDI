@@ -53,6 +53,28 @@ public class FlipFitCustomerMenu {
         customerClientMainPage(userName);
     }
 
+    private void handleEmptyGymList(String userName) throws ParseException {
+        System.out.println("Please choose an option:");
+        System.out.println("1. Try a different location (Return to Book Slot Menu)");
+        System.out.println("2. Exit to main customer menu");
+
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                // Recalls bookSlotSubMenu, allowing the user to search again
+                bookSlotSubMenu(userName);
+                break;
+            case 2:
+                // Returns control flow to customerClientMainPage loop
+                System.out.println("Returning to main menu.");
+                break;
+            default:
+                System.out.println("Invalid choice, returning to main menu.");
+                break;
+        }
+    }
+
+
     private void bookSlotSubMenu(String userName) throws ParseException {
         System.out.println("Provide Location to search : ");
         String location = scanner.next();
@@ -61,7 +83,8 @@ public class FlipFitCustomerMenu {
         if (centreListByLocation.isEmpty()) {
             System.out.println(
                     "There are no available GYM Centres in " + location + ". Please Select some other location");
-            bookSlotSubMenu(userName);
+            //bookSlotSubMenu(userName);
+            handleEmptyGymList(userName);
             return;
         }
         System.out.print("Choose a gymCentre ID to proceed: ");

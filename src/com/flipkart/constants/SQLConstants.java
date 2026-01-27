@@ -8,6 +8,7 @@ public class SQLConstants {
     public static final String FETCH_ALL_GYM_OWNERS_QUERY = "SELECT * FROM FlipFitNew.GymOwner";
     public static final String FETCH_ALL_PENDING_GYM_OWNERS_QUERY = "SELECT * FROM FlipFitNew.GymOwner where isApproved = 0";
     public static final String SEND_GYM_OWNER_APPROVAL_REQ_QUERY = "UPDATE FlipFitNew.GymOwner SET isApproved = 0 WHERE Id =?;";
+    public static final String UPDATE_PASSWORD_QUERY = "UPDATE Customer SET password = ? WHERE name = ? AND password = ?;";
 
     public static final String ADD_GYM_CENTRE_QUERY = "INSERT INTO FlipFitNew.GymCentre (centreId, ownerId, centreName, gstin, city, capacity, price, isApproved, noOfSlots, openTime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     // public static final String ADD_GYM_CENTRE_QUERY = "INSERT INTO
