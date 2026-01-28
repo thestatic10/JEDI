@@ -1,0 +1,8 @@
+module:JEDI
+com.flipkart.bean
+com.flipkart.business
+com.flipkart.client
+com.flipkart.constants
+com.flipkart.dao
+com.flipkart.exceptions
+com.flipkart.utils
