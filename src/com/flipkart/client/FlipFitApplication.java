@@ -8,6 +8,11 @@ import com.flipkart.exceptions.LoginFailedException;
 import java.text.ParseException;
 import java.util.Scanner;
 
+/**
+ * Main application class for FlipFit.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitApplication {
     public static Scanner scanner = new Scanner(System.in);
     private static FlipFitAdminMenu adminClient = new FlipFitAdminMenu();
@@ -17,6 +22,9 @@ public class FlipFitApplication {
     // Injecting DAO to handle the password change logic
     private static FlipFitCustomereDAOInterface customerDao = new FlipFitCustomerDAO();
 
+    /**
+     * Main page of the application.
+     */
     private static void mainPage() {
         System.out.println("\n1. Login\n2. Registration\n3. Change Password\n4. Exit");
         System.out.print("Enter Choice: ");
@@ -42,6 +50,9 @@ public class FlipFitApplication {
         mainPage();
     }
 
+    /**
+     * Login logic.
+     */
     private static void login() {
         try {
             System.out.println("Choose your Role:");
@@ -50,9 +61,15 @@ public class FlipFitApplication {
 
             FlipFitRole role = null;
             switch (roleChoice) {
-                case 1: role = FlipFitRole.ADMIN; break;
-                case 2: role = FlipFitRole.GYM_OWNER; break;
-                case 3: role = FlipFitRole.CUSTOMER; break;
+                case 1:
+                    role = FlipFitRole.ADMIN;
+                    break;
+                case 2:
+                    role = FlipFitRole.GYM_OWNER;
+                    break;
+                case 3:
+                    role = FlipFitRole.CUSTOMER;
+                    break;
                 default:
                     System.out.println("Invalid Option Selected");
                     return;
@@ -64,15 +81,24 @@ public class FlipFitApplication {
             String password = scanner.next();
 
             switch (role) {
-                case ADMIN: adminClient.adminLogin(userName, password); break;
-                case GYM_OWNER: gymOwnerClient.gymOwnerLogin(userName, password); break;
-                case CUSTOMER: customerClient.customerLogin(userName, password); break;
+                case ADMIN:
+                    adminClient.adminLogin(userName, password);
+                    break;
+                case GYM_OWNER:
+                    gymOwnerClient.gymOwnerLogin(userName, password);
+                    break;
+                case CUSTOMER:
+                    customerClient.customerLogin(userName, password);
+                    break;
             }
         } catch (IllegalArgumentException | ParseException | LoginFailedException e) {
             System.out.println("Login Failed: " + e.getMessage());
         }
     }
 
+    /**
+     * Change password logic.
+     */
     private static void changepassword() {
         System.out.println("--- Change Password ---");
         System.out.print("Enter Username: ");
@@ -102,6 +128,9 @@ public class FlipFitApplication {
         }
     }
 
+    /**
+     * Registration logic.
+     */
     private static void registration() {
         try {
             System.out.println("Choose your Role:");
@@ -110,24 +139,41 @@ public class FlipFitApplication {
 
             FlipFitRole role = null;
             switch (roleChoice) {
-                case 1: role = FlipFitRole.ADMIN; break;
-                case 2: role = FlipFitRole.GYM_OWNER; break;
-                case 3: role = FlipFitRole.CUSTOMER; break;
+                case 1:
+                    role = FlipFitRole.ADMIN;
+                    break;
+                case 2:
+                    role = FlipFitRole.GYM_OWNER;
+                    break;
+                case 3:
+                    role = FlipFitRole.CUSTOMER;
+                    break;
                 default:
                     System.out.println("Invalid Option Selected");
                     return;
             }
 
             switch (role) {
-                case ADMIN: adminClient.register(); break;
-                case CUSTOMER: customerClient.register(); break;
-                case GYM_OWNER: gymOwnerClient.register(); break;
+                case ADMIN:
+                    adminClient.register();
+                    break;
+                case CUSTOMER:
+                    customerClient.register();
+                    break;
+                case GYM_OWNER:
+                    gymOwnerClient.register();
+                    break;
             }
         } catch (IllegalArgumentException | ParseException e) {
             System.out.println("Registration Error.");
         }
     }
 
+    /**
+     * Main method.
+     * 
+     * @param args Command line arguments
+     */
     public static void main(String[] args) {
         System.out.println("Welcome to FlipFit Application!\n");
         mainPage();

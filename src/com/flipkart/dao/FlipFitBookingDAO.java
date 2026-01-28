@@ -12,12 +12,23 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Data Access Object (DAO) implementation for Booking operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
 
     private List<FlipFitBooking> bookingList = new ArrayList<>();
     private FlipFitScheduleDAO flipFitScheduleDAO = new FlipFitScheduleDAO();
     private FlipFitSlotDAO flipFitSlotDAO = new FlipFitSlotDAO();
 
+    /**
+     * Add a booking.
+     * 
+     * @param userName   Username
+     * @param scheduleID Schedule ID
+     */
     public void addBooking(String userName, String scheduleID) {
         try {
             String bookingId = userName + scheduleID;
@@ -30,6 +41,12 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         }
     }
 
+    /**
+     * Get bookings by customer ID.
+     * 
+     * @param customerId Customer ID
+     * @return List of bookings
+     */
     public List<FlipFitBooking> getBookingByCustomerId(String customerId) {
         List<FlipFitBooking> customerBookings = new ArrayList<>();
         for (FlipFitBooking booking : bookingList) {
@@ -40,6 +57,12 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         return customerBookings;
     }
 
+    /**
+     * Get customer plan.
+     * 
+     * @param customerId Customer ID
+     * @return List of user plans
+     */
     public List<UserPlan> getCustomerPlan(String customerId) {
         List<UserPlan> allUserPlan = new ArrayList<>();
         try {
@@ -61,6 +84,14 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         return allUserPlan;
     }
 
+    /**
+     * Check booking overlap.
+     * 
+     * @param customerId Customer ID
+     * @param date       Date
+     * @param localTime  Time
+     * @return True if overlap exists
+     */
     public boolean checkBookingOverlap(String customerId, Date date, LocalTime localTime) {
         LocalTime endTime = localTime.plusHours(1);
         List<UserPlan> allUserPlan = getCustomerPlan(customerId);
@@ -76,6 +107,11 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
                 });
     }
 
+    /**
+     * Cancel booking by ID.
+     * 
+     * @param bookingID Booking ID
+     */
     public void cancelBookingById(String bookingID) {
         Optional<FlipFitBooking> bookingToRemove = bookingList.stream()
                 .filter(booking -> booking.getBookingID().equals(bookingID))
@@ -89,6 +125,12 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         }
     }
 
+    /**
+     * Get booking by booking ID.
+     * 
+     * @param bookingId Booking ID
+     * @return Booking object
+     */
     public FlipFitBooking getBookingByBookingId(String bookingId) {
         Optional<FlipFitBooking> optionalBooking = bookingList.stream()
                 .filter(booking -> booking.getBookingID().equals(bookingId))

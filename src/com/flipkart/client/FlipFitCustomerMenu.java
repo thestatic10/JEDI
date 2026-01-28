@@ -18,10 +18,23 @@ import java.util.List;
 import java.util.Scanner;
 import static com.flipkart.utils.Util.*;
 
+/**
+ * Menu class for Customer operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitCustomerMenu {
     private FlipFitCustomerInterface customerService = new FlipFitCustomerService();
     Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Customer login.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if login successful
+     * @throws ParseException If date parsing fails
+     */
     public boolean customerLogin(String userName, String password) throws ParseException {
         if (customerService.isUserValid(userName, password)) {
             System.out.println("Successfully logged in");
@@ -33,6 +46,11 @@ public class FlipFitCustomerMenu {
         return true;
     }
 
+    /**
+     * Register customer.
+     * 
+     * @throws ParseException If date parsing fails
+     */
     public void register() throws ParseException {
         System.out.println("Enter your Username");
         String userName = scanner.next();
@@ -53,6 +71,12 @@ public class FlipFitCustomerMenu {
         customerClientMainPage(userName);
     }
 
+    /**
+     * Handle empty gym list logic.
+     * 
+     * @param userName Username
+     * @throws ParseException If date parsing fails
+     */
     private void handleEmptyGymList(String userName) throws ParseException {
         System.out.println("Please choose an option:");
         System.out.println("1. Try a different location (Return to Book Slot Menu)");
@@ -74,7 +98,12 @@ public class FlipFitCustomerMenu {
         }
     }
 
-
+    /**
+     * Book slot sub menu.
+     * 
+     * @param userName Username
+     * @throws ParseException If date parsing fails
+     */
     private void bookSlotSubMenu(String userName) throws ParseException {
         System.out.println("Provide Location to search : ");
         String location = scanner.next();
@@ -83,7 +112,7 @@ public class FlipFitCustomerMenu {
         if (centreListByLocation.isEmpty()) {
             System.out.println(
                     "There are no available GYM Centres in " + location + ". Please Select some other location");
-            //bookSlotSubMenu(userName);
+            // bookSlotSubMenu(userName);
             handleEmptyGymList(userName);
             return;
         }
@@ -93,6 +122,15 @@ public class FlipFitCustomerMenu {
         chooseSlot(chosenGym, userName, date, chosenGym);
     }
 
+    /**
+     * Choose slot.
+     * 
+     * @param gymCentreId Gym Center ID
+     * @param userName    Username
+     * @param sqlDate     SQL Date
+     * @param centreId    Center ID
+     * @throws ParseException If date parsing fails
+     */
     private void chooseSlot(String gymCentreId, String userName, Date sqlDate, String centreId) throws ParseException {
         System.out.println("Choose from the Below Slots");
         List<FlipFitSlot> availableSlots = customerService.getAvailableSlots(gymCentreId, sqlDate);
@@ -108,6 +146,11 @@ public class FlipFitCustomerMenu {
             chooseSlot(gymCentreId, userName, sqlDate, centreId);
     }
 
+    /**
+     * Print bookings sub menu.
+     * 
+     * @param userName Username
+     */
     private void printbookingsSubMenu(String userName) {
         System.out.println("Bookings : ");
         List<FlipFitBooking> allBookingList = customerService.getCustomerBookings(userName);
@@ -122,6 +165,11 @@ public class FlipFitCustomerMenu {
         System.out.println("----");
     }
 
+    /**
+     * Cancel booking sub menu.
+     * 
+     * @param userName Username
+     */
     private void cancelBookingSubMenu(String userName) {
         printbookingsSubMenu(userName);
         System.out.println("Select the Booking you want to cancel: ");
@@ -130,6 +178,12 @@ public class FlipFitCustomerMenu {
 
     }
 
+    /**
+     * View schedule sub menu.
+     * 
+     * @param userName Username
+     * @throws ParseException If date parsing fails
+     */
     private void viewScheduleSubMenu(String userName) throws ParseException {
         Date date = selectDate();
         List<UserPlan> userPlans = customerService.getCustomerPlan(userName, date);
@@ -140,16 +194,26 @@ public class FlipFitCustomerMenu {
         }
     }
 
+    /**
+     * Get customer menu.
+     */
     public static void getCustomerMenu() {
         System.out.println("Welcome to Customer Menu");
     }
 
+    /**
+     * Customer client main page.
+     * 
+     * @param userName Username
+     * @throws ParseException If date parsing fails
+     */
     public void customerClientMainPage(String userName) throws ParseException {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = currentTime.format(myFormat);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
         System.out.println(
-                "WELCOME " + userName + " !!\nPlease choose among the following options\nLogin TIME: " + currentTime);
+                "WELCOME " + userName + " !!\nPlease choose among the following options\nLogin Date: "
+                        + currentTime.format(dateFormat) + "\nLogin Time: " + currentTime.format(timeFormat));
         while (true) {
             System.out.println(
                     "1. View My Profile \n2. Book a slot in a Gym \n3. View Bookings\n4. Cancel Bookings\n5. Go Back to previous menu\n6. View My Schedule");

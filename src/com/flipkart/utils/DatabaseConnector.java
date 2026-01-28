@@ -6,11 +6,22 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Utility class for database connection.
+ * 
+ * @author gamma-group
+ */
 public class DatabaseConnector {
 
     // Database credentials
     private static Connection singleInstance = null;
 
+    /**
+     * Connect to the database.
+     * 
+     * @return Connection object
+     * @throws SQLException If connection fails
+     */
     public static Connection connect() throws SQLException {
 
         if (singleInstance == null) {

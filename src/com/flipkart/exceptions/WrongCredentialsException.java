@@ -5,9 +5,11 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 
 /**
  * Exception thrown when wrong credentials entered
+ * 
+ * @author gamma-group
  */
 public class WrongCredentialsException extends Exception {
     public WrongCredentialsException() {
-        super(RED_COLOR+"Wrong username or password!"+RESET_COLOR);
+        super(RED_COLOR + "Wrong username or password!" + RESET_COLOR);
     }
 }

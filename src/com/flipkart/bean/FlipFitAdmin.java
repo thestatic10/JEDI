@@ -3,6 +3,8 @@ package com.flipkart.bean;
 /**
  * Represents an admin user in the FlipFit system, extending FlipFitUser.
  * This class provides a default constructor initializing admin details.
+ * 
+ * @author gamma-group
  */
 public class FlipFitAdmin extends FlipFitUser {
 
@@ -14,9 +16,10 @@ public class FlipFitAdmin extends FlipFitUser {
 
     /**
      * Parameterized constructor for creating an admin user.
-     * @param userId User ID of the admin
+     * 
+     * @param userId   User ID of the admin
      * @param userName Username of the admin
-     * @param email Email of the admin
+     * @param email    Email of the admin
      * @param password Password of the admin
      */
     public FlipFitAdmin(String userId, String userName, String email, String password) {

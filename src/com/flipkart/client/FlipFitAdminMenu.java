@@ -13,6 +13,11 @@ import java.util.Scanner;
 
 import static com.flipkart.utils.Util.*;
 
+/**
+ * Menu class for Admin operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitAdminMenu {
     private static FlipFitAdmin admin = new FlipFitAdmin();
     private static FlipFitAdminInterface adminService = new FlipFitAdminService();
@@ -20,6 +25,13 @@ public class FlipFitAdminMenu {
     private static FlipFitGymCenterInterface gymCenterService = new FlipFitGymCenterService();
     public static Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Admin login.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if login successful
+     */
     public boolean adminLogin(String userName, String password) {
         if (adminService.isUserValid(userName, password)) {
             System.out.println("Successfully logged in");
@@ -31,6 +43,9 @@ public class FlipFitAdminMenu {
         }
     }
 
+    /**
+     * Register a new admin.
+     */
     public void register() {
         System.out.println("Enter email:");
         String email = scanner.next();
@@ -43,6 +58,9 @@ public class FlipFitAdminMenu {
         System.out.println("Admin registered successfully!");
     }
 
+    /**
+     * Handle gym owner approval requests.
+     */
     private void handleGymOwnerApprovalRequests() {
         // print the list with indexes from 1
         System.out.println("Admin Approval for a Gym Owner ----------");
@@ -66,6 +84,9 @@ public class FlipFitAdminMenu {
 
     }
 
+    /**
+     * Handle gym center approval requests.
+     */
     private void handleGymCenterApprovalRequests() {
         // print the list with indexes from 1
         System.out.println("Press 0 to Exit or Choose the Gym Centre To Modify:");
@@ -86,39 +107,49 @@ public class FlipFitAdminMenu {
         // adminClientMainPage();
     }
 
+    /**
+     * Main page for Admin.
+     */
     public void adminClientMainPage() {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = currentTime.format(myFormat);
-        System.out.println("Welcome ADMIN to FlipFit Application\nLogin Time: " + currentTime);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
+        System.out.println("Welcome ADMIN to FlipFit Application\nLogin Date: " + currentTime.format(dateFormat)
+                + "\nLogin Time: " + currentTime.format(timeFormat));
         while (true) {
             System.out.println(
-                    "0. View All Gym Owners\n1. View All Gym Centres\n2. View Pending GymOwner Approval Requests\n3. View Pending GymCenter's Approval Requests\n4. Go Back To Previous Menu");
+                    "1. View Approved Gym Owners\n2. View Unapproved Gym Owners\n3. View Approved Gym Centers\n4. View Unapproved Gym Centers\n5. View All Gym Owners\n6. View All Gym Centers\n7. Go Back To Previous Menu");
             int pendingChoice = scanner.nextInt();
             switch (pendingChoice) {
-                case 0:
+                case 1:
+                    List<FlipFitGymOwner> approvedGymOwners = adminService.getApprovedGymOwners();
+                    printOwnerList(approvedGymOwners);
+                    break;
+                case 2:
+                    List<FlipFitGymOwner> unapprovedGymOwners = adminService.getUnapprovedGymOwners();
+                    printOwnerList(unapprovedGymOwners);
+                    if (!unapprovedGymOwners.isEmpty())
+                        handleGymOwnerApprovalRequests();
+                    break;
+                case 3:
+                    List<FlipFitGymCenter> approvedGymCenters = adminService.getApprovedGymCenters();
+                    printGymCentres(approvedGymCenters);
+                    break;
+                case 4:
+                    List<FlipFitGymCenter> unapprovedGymCenters = adminService.getUnapprovedGymCenters();
+                    printGymCentres(unapprovedGymCenters);
+                    if (!unapprovedGymCenters.isEmpty())
+                        handleGymCenterApprovalRequests();
+                    break;
+                case 5:
                     List<FlipFitGymOwner> allGymOwners = gymOwnerService.viewAllGymOwners();
                     printOwnerList(allGymOwners);
                     break;
-                case 1:
+                case 6:
                     List<FlipFitGymCenter> allGymCenters = gymCenterService.viewAllGymCenters();
                     printGymCentres(allGymCenters);
                     break;
-                case 2:
-                    List<FlipFitGymOwner> pendingGymOwners = adminService.viewPendingGymOwners();
-                    printOwnerList(pendingGymOwners);
-                    if (!pendingGymOwners.isEmpty())
-                        handleGymOwnerApprovalRequests();
-                    break;
-
-                case 3:
-                    List<FlipFitGymCenter> pendingGymCentres = adminService.viewPendingGymCentres();// get
-                                                                                                    // listGymCenterIds
-                    printGymCentres(pendingGymCentres);
-                    if (!pendingGymCentres.isEmpty())
-                        handleGymCenterApprovalRequests();
-                    break;
-                case 4:
+                case 7:
                     return;
             }
         }

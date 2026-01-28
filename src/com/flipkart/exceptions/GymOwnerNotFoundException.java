@@ -5,9 +5,11 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 
 /**
  * Exception thrown when GymOwner not found
+ * 
+ * @author gamma-group
  */
 public class GymOwnerNotFoundException extends Exception {
-    public GymOwnerNotFoundException(String gymOwnerId){
-        super(RED_COLOR+"Gym Owner with ID: " + gymOwnerId + " does not exist."+RESET_COLOR);
+    public GymOwnerNotFoundException(String gymOwnerId) {
+        super(RED_COLOR + "Gym Owner with ID: " + gymOwnerId + " does not exist." + RESET_COLOR);
     }
 }

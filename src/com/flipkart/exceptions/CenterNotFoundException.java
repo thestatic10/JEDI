@@ -5,9 +5,11 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 
 /**
  * Exception thrown when GymCentre not found
+ * 
+ * @author gamma-group
  */
-public class CenterNotFoundException extends RuntimeException{
-    public CenterNotFoundException(String gymId){
-        super(RED_COLOR+"Gym Centre" + gymId + " not found!"+RESET_COLOR);
+public class CenterNotFoundException extends RuntimeException {
+    public CenterNotFoundException(String gymId) {
+        super(RED_COLOR + "Gym Centre" + gymId + " not found!" + RESET_COLOR);
     }
 }

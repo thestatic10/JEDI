@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * Interface defining operations that an admin can perform in the FlipFit
  * system.
+ * 
+ * @author gamma-group
  */
 public interface FlipFitAdminInterface {
 
@@ -58,4 +60,12 @@ public interface FlipFitAdminInterface {
      * @param email    Email of the admin
      */
     void registerAdmin(String userName, String password, String email);
+
+    List<FlipFitGymOwner> getApprovedGymOwners();
+
+    List<FlipFitGymOwner> getUnapprovedGymOwners();
+
+    List<FlipFitGymCenter> getApprovedGymCenters();
+
+    List<FlipFitGymCenter> getUnapprovedGymCenters();
 }

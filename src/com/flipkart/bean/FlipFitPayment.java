@@ -2,7 +2,10 @@ package com.flipkart.bean;
 
 /**
  * Represents a payment in the FlipFit system.
- * Each payment is associated with a booking and contains details such as payment ID and amount paid.
+ * Each payment is associated with a booking and contains details such as
+ * payment ID and amount paid.
+ * 
+ * @author gamma-group
  */
 public class FlipFitPayment {
 
@@ -12,6 +15,7 @@ public class FlipFitPayment {
 
     /**
      * Retrieves the payment ID.
+     * 
      * @return Payment ID
      */
     public String getPaymentId() {
@@ -20,6 +24,7 @@ public class FlipFitPayment {
 
     /**
      * Sets the payment ID.
+     * 
      * @param paymentId Payment ID to set
      */
     public void setPaymentId(String paymentId) {
@@ -28,6 +33,7 @@ public class FlipFitPayment {
 
     /**
      * Retrieves the amount paid for the payment.
+     * 
      * @return Amount paid
      */
     public String getAmountPaid() {
@@ -36,6 +42,7 @@ public class FlipFitPayment {
 
     /**
      * Sets the amount paid for the payment.
+     * 
      * @param amountPaid Amount paid to set
      */
     public void setAmountPaid(String amountPaid) {
@@ -44,6 +51,7 @@ public class FlipFitPayment {
 
     /**
      * Retrieves the booking ID associated with the payment.
+     * 
      * @return Booking ID
      */
     public String getBookingId() {
@@ -52,6 +60,7 @@ public class FlipFitPayment {
 
     /**
      * Sets the booking ID associated with the payment.
+     * 
      * @param bookingId Booking ID to set
      */
     public void setBookingId(String bookingId) {

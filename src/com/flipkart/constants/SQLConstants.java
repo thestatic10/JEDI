@@ -1,5 +1,10 @@
 package com.flipkart.constants;
 
+/**
+ * Class containing SQL queries and constants.
+ * 
+ * @author gamma-group
+ */
 public class SQLConstants {
 
     // -------------------CHANGE PASSWORD---------------------

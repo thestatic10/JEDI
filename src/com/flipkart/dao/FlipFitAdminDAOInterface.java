@@ -11,6 +11,8 @@ import java.util.List;
  * FlipFit system.
  * This interface defines methods related to gym owners and gym centers
  * approval/validation.
+ * 
+ * @author gamma-group
  */
 public interface FlipFitAdminDAOInterface {
 
@@ -69,4 +71,18 @@ public interface FlipFitAdminDAOInterface {
      * @return FlipFitAdmin object
      */
     FlipFitAdmin getAdminById(String userName);
+
+    /**
+     * Retrieves a list of all gym owners.
+     * 
+     * @return List of all gym owners
+     */
+    List<FlipFitGymOwner> getAllGymOwners();
+
+    /**
+     * Retrieves a list of all gym centers.
+     * 
+     * @return List of all gym centers
+     */
+    List<FlipFitGymCenter> getAllGymCenters();
 }

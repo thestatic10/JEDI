@@ -5,6 +5,8 @@ import java.util.UUID;
 
 /**
  * Represents Schedule of any GymCentre Slot
+ * 
+ * @author gamma-group
  */
 
 public class FlipFitSchedule {
@@ -15,8 +17,9 @@ public class FlipFitSchedule {
 
     /**
      * Constructor for FlipFitSchedule.
-     * @param date the date of the schedule (LocalDate object)
-     * @param slotId the ID of the slot associated with the schedule
+     * 
+     * @param date         the date of the schedule (LocalDate object)
+     * @param slotId       the ID of the slot associated with the schedule
      * @param availability the availability status of the slot (integer)
      */
     public FlipFitSchedule(LocalDate date, String slotId, int availability) {
@@ -28,6 +31,7 @@ public class FlipFitSchedule {
 
     /**
      * Setter for the schedule ID.
+     * 
      * @param scheduleID the schedule ID to set
      */
     public void setScheduleID(String scheduleID) {
@@ -36,6 +40,7 @@ public class FlipFitSchedule {
 
     /**
      * Getter for the schedule ID.
+     * 
      * @return the schedule ID
      */
     public String getScheduleID() {
@@ -44,6 +49,7 @@ public class FlipFitSchedule {
 
     /**
      * Setter for the date of the schedule.
+     * 
      * @param date the date to set for the schedule (LocalDate object)
      */
     public void setDate(LocalDate date) {
@@ -52,6 +58,7 @@ public class FlipFitSchedule {
 
     /**
      * Getter for the date of the schedule.
+     * 
      * @return the date of the schedule (LocalDate object)
      */
     public LocalDate getDate() {
@@ -60,6 +67,7 @@ public class FlipFitSchedule {
 
     /**
      * Setter for the slot ID associated with the schedule.
+     * 
      * @param slotId the slot ID to set
      */
     public void setSlotId(String slotId) {
@@ -68,6 +76,7 @@ public class FlipFitSchedule {
 
     /**
      * Getter for the slot ID associated with the schedule.
+     * 
      * @return the slot ID
      */
     public String getSlotId() {
@@ -76,6 +85,7 @@ public class FlipFitSchedule {
 
     /**
      * Getter for the availability status of the slot.
+     * 
      * @return the availability status (integer)
      */
     public int getAvailability() {
@@ -84,6 +94,7 @@ public class FlipFitSchedule {
 
     /**
      * Setter for the availability status of the slot.
+     * 
      * @param availability the availability status to set
      */
     public void setAvailability(int availability) {
