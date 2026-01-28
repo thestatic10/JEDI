@@ -11,7 +11,7 @@ import com.flipkart.dao.FlipFitScheduleDAO;
 
 /**
  * Service class for Schedule operations.
- * 
+ *
  * @author gamma-group
  */
 public class FlipFitScheduleService implements FlipFitScheduleInterface {
@@ -22,7 +22,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Create a schedule.
-     * 
+     *
      * @param date   Date
      * @param slotId Slot ID
      * @return Created schedule
@@ -40,15 +40,15 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Get schedule by date and slot ID.
-     * 
+     *
      * @param SlotId Slot ID
      * @param date   Date
      * @return Schedule object
      */
     public FlipFitSchedule getScheduleByDateAndSlotId(String SlotId, Date date) {
         List<FlipFitSchedule> scheduleList = flipFitScheduleDAO.getAllScheduleByDate(date);
-        for (FlipFitSchedule schedule : scheduleList) {
-            if (schedule.getSlotId().equals(SlotId))
+        for(FlipFitSchedule schedule: scheduleList){
+            if(schedule.getSlotId().equals(SlotId))
                 return schedule;
         }
 
@@ -57,7 +57,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Modify schedule.
-     * 
+     *
      * @param scheduleId Schedule ID
      * @param action     Action to perform
      * @return True if successful
@@ -68,7 +68,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Check availability.
-     * 
+     *
      * @param centreID Center ID
      * @param date     Date
      * @return List of available schedules
@@ -76,10 +76,10 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
     public List<FlipFitSchedule> checkAvailability(String centreID, Date date) {
         List<FlipFitSlot> allSlotsForGym = slotService.getAllSlotsByCentre(centreID);
         List<FlipFitSchedule> allAvailableSchedules = new ArrayList<>();
-        for (FlipFitSlot slot : allSlotsForGym) {
+        for(FlipFitSlot slot : allSlotsForGym){
             String slotId = slot.getSlotId();
             FlipFitSchedule schedule = getOrCreateSchedule(slotId, date);
-            if (schedule.getAvailability() > 0)
+            if(schedule.getAvailability() > 0)
                 allAvailableSchedules.add(schedule);
         }
 
@@ -88,7 +88,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Get all available slots by date.
-     * 
+     *
      * @param centreID Center ID
      * @param date     Date
      * @return List of available slots
@@ -96,10 +96,10 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
     public List<FlipFitSlot> getAllAvailableSlotsByDate(String centreID, Date date) {
         List<FlipFitSlot> allSlotsOfThatCentre = slotService.getAllSlotsByCentre(centreID);
         List<FlipFitSlot> response = slotService.getAllSlotsByCentre(centreID);
-        for (FlipFitSlot slot : allSlotsOfThatCentre) {
-            for (FlipFitSchedule schedule : flipFitScheduleDAO.getAllScheduleByDate(date)) {
-                if (slotService.getSlotByID(schedule.getSlotId()).getCenterID().equals(centreID)) {
-                    if (schedule.getAvailability() <= 0) {
+        for(FlipFitSlot slot: allSlotsOfThatCentre){
+            for(FlipFitSchedule schedule: flipFitScheduleDAO.getAllScheduleByDate(date)){
+                if (slotService.getSlotByID(schedule.getSlotId()).getCenterID().equals(centreID)){
+                    if(schedule.getAvailability() <= 0){
                         response.remove(slot);
                     }
                 }
@@ -110,7 +110,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Get schedule by ID.
-     * 
+     *
      * @param scheduleID Schedule ID
      * @return Schedule object
      */
@@ -120,7 +120,7 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
 
     /**
      * Get or create schedule.
-     * 
+     *
      * @param slotId Slot ID
      * @param date   Date
      * @return Schedule object
@@ -133,5 +133,6 @@ public class FlipFitScheduleService implements FlipFitScheduleInterface {
         return schedule;
 
     }
+
 
 }

@@ -33,7 +33,8 @@ public class Util {
         System.out.printf("%-8s\t", "PRICE");
         System.out.printf("%-8s\t\n", "APPROVED");
         System.out.println("-----");
-        for (FlipFitGymCenter gymCenter : centreListByLocation) {
+        // java
+        centreListByLocation.forEach(gymCenter -> {
             System.out.printf("%-8s\t", gymCenter.getGymCenterId());
             System.out.printf("%-8s\t", gymCenter.getOwnerID());
             System.out.printf("%-8s\t", gymCenter.getGymCenterName());
@@ -42,7 +43,8 @@ public class Util {
             System.out.printf("%-8s\t", gymCenter.getCapacity());
             System.out.printf("%-8s\t", gymCenter.getPrice());
             System.out.printf("%-8s\t\n", gymCenter.isApproved());
-        }
+        });
+
         System.out.println("-----");
     }
 
@@ -60,7 +62,7 @@ public class Util {
         System.out.printf("%23s\t\n", "IS-APPROVED");
         System.out.println("-----");
         System.out.println("");
-        for (FlipFitGymOwner gymOwner : gymOwnerList) {
+        gymOwnerList.forEach(gymOwner -> {
             System.out.printf("%-8s\t", gymOwner.getUserID());
             System.out.printf("%-8s\t", gymOwner.getUserName());
             System.out.printf("%-8s\t", gymOwner.getEmail());
@@ -72,7 +74,7 @@ public class Util {
             } else {
                 System.out.println("Pending\n");
             }
-        }
+        });
         System.out.println("----");
     }
 
@@ -101,10 +103,10 @@ public class Util {
         System.out.printf("%-8s\t", "SLOT-ID");
         System.out.printf("%-8s\t\n", "SLOT-TIME");
         System.out.println("----");
-        for (FlipFitSlot slot : slots) {
+        slots.forEach(slot -> {
             System.out.printf("%-8s\t", slot.getSlotId());
             System.out.printf("%-8s\t\n", slot.getTime());
-        }
+        });
         System.out.println("----");
     }
 

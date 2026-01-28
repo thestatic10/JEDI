@@ -158,10 +158,10 @@ public class FlipFitCustomerMenu {
         System.out.printf("%-8s\t", "BOOKING-ID");
         System.out.printf("%47s\t\n", "SCHEDULE-ID");
         System.out.println("-----");
-        for (FlipFitBooking booking : allBookingList) {
+        allBookingList.forEach(booking -> {
             System.out.printf("%-8s\t", booking.getBookingID());
             System.out.printf("%-8s\t\n", booking.getScheduleID());
-        }
+        });
         System.out.println("----");
     }
 
@@ -189,9 +189,7 @@ public class FlipFitCustomerMenu {
         List<UserPlan> userPlans = customerService.getCustomerPlan(userName, date);
         System.out.println("Schedule for " + date + " :");
         System.out.printf("%-15s\t%-15s\t%-15s\t\n", "Centre-ID", "Slot-ID", "Time");
-        for (UserPlan plan : userPlans) {
-            System.out.printf("%-15s\t%-15s\t%-15s\t\n", plan.getCentreID(), plan.getSlotId(), plan.getTime());
-        }
+        userPlans.forEach(plan -> System.out.printf("%-15s\t%-15s\t%-15s\t\n", plan.getCentreID(), plan.getSlotId(), plan.getTime()));
     }
 
     /**

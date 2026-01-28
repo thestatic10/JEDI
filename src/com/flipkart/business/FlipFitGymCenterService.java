@@ -68,7 +68,7 @@ public class FlipFitGymCenterService implements FlipFitGymCenterInterface {
         int openTime = gymCentre.getOpenTime();
         int noOfSlots = gymCentre.getNoOfSlots();
 
-        for (int i = 0; i < noOfSlots; i++) {
+        java.util.stream.IntStream.range(0, noOfSlots).forEach(i -> {
             // Generate UUID for slot
             String slotId = java.util.UUID.randomUUID().toString();
             // Calculate time: openTime + i hours
@@ -76,7 +76,7 @@ public class FlipFitGymCenterService implements FlipFitGymCenterInterface {
 
             FlipFitSlot slot = new FlipFitSlot(slotId, gymCentre.getGymCenterId(), time);
             slots.add(slot);
-        }
+        });
 
         FlipFitSlotInterface slotService = new FlipFitSlotService();
         slotService.addSlotsForGym(gymCentre.getGymCenterId(), slots);

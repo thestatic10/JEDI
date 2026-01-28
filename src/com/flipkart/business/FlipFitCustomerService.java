@@ -91,11 +91,11 @@ public class FlipFitCustomerService implements FlipFitCustomerInterface {
     public List<UserPlan> getCustomerPlan(String customerId, Date date) {
         List<UserPlan> allPlan = bookingService.getCustomerPlan(customerId);
         List<UserPlan> selectedPlan = new ArrayList<>();
-        for (UserPlan userPlan : allPlan) {
+        allPlan.forEach(userPlan -> {
             if (userPlan.getDate().equals(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())) {
                 selectedPlan.add(userPlan);
             }
-        }
+        });
         return selectedPlan;
     }
 

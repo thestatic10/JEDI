@@ -49,11 +49,12 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
      */
     public List<FlipFitBooking> getBookingByCustomerId(String customerId) {
         List<FlipFitBooking> customerBookings = new ArrayList<>();
-        for (FlipFitBooking booking : bookingList) {
+        bookingList.forEach(booking -> {
             if (booking.getUserID().equals(customerId)) {
                 customerBookings.add(booking);
             }
-        }
+        });
+
         return customerBookings;
     }
 
@@ -67,7 +68,7 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
         List<UserPlan> allUserPlan = new ArrayList<>();
         try {
             List<FlipFitBooking> customerBookings = getBookingByCustomerId(customerId);
-            for (FlipFitBooking booking : customerBookings) {
+            customerBookings.forEach(booking -> {
                 FlipFitSchedule schedule = flipFitScheduleDAO.getSchedule(booking.getScheduleID());
                 FlipFitSlot slot = flipFitSlotDAO.getSlotById(schedule.getSlotId());
                 UserPlan userPlan = new UserPlan(
@@ -77,7 +78,8 @@ public class FlipFitBookingDAO implements FlipFitBookingDAOInterface {
                         schedule.getScheduleID(),
                         schedule.getDate());
                 allUserPlan.add(userPlan);
-            }
+            });
+
         } catch (Exception e) {
             System.out.println("Failed to get customer plan");
         }
