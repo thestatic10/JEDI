@@ -12,9 +12,25 @@ import java.sql.SQLException;
 
 import static com.flipkart.constants.SQLConstants.*;
 
+/**
+ * Data Access Object (DAO) implementation for Customer operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
 
-    public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException {
+    /**
+     * Register customer.
+     * 
+     * @param userName    Username
+     * @param password    Password
+     * @param email       Email
+     * @param phoneNumber Phone Number
+     * @param cardNumber  Card Number
+     * @throws RegistrationFailedException If registration fails
+     */
+    public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber)
+            throws RegistrationFailedException {
         try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement stmt = conn.prepareStatement(ADD_NEW_CUSTOMER);
@@ -34,6 +50,14 @@ public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
         }
     }
 
+    /**
+     * Check if user is valid.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if valid
+     * @throws UserInvalidException If validation fails
+     */
     public boolean isUserValid(String userName, String password) throws UserInvalidException {
         try {
             Connection conn = DatabaseConnector.connect();
@@ -41,7 +65,7 @@ public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
             stmt.setString(1, userName);
             stmt.setString(2, password);
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 stmt.close();
                 return true;
             }
@@ -54,6 +78,12 @@ public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
         return false;
     }
 
+    /**
+     * Get customer by ID.
+     * 
+     * @param userName Username
+     * @return Customer object
+     */
     public FlipFitCustomer getCustomerById(String userName) {
         FlipFitCustomer customer = new FlipFitCustomer();
         try {
@@ -61,46 +91,47 @@ public class FlipFitCustomerDAO implements FlipFitCustomereDAOInterface {
             PreparedStatement stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID);
             stmt.setString(1, userName);
             ResultSet rs = stmt.executeQuery();
-            rs.next();
-            customer.setEmail(rs.getString("email"));
-            customer.setUserID(rs.getString("Id"));
-            customer.setPassword(rs.getString("password"));
-            customer.setUserName(rs.getString("name"));
-            customer.setCustomerPhone(rs.getString("phone"));
-            customer.setCardDetails(rs.getString("cardDetails"));
-
+            if (rs.next()) {
+                customer.setEmail(rs.getString("email"));
+                customer.setUserID(rs.getString("Id"));
+                customer.setPassword(rs.getString("password"));
+                customer.setUserName(rs.getString("name"));
+                customer.setCustomerPhone(rs.getString("phone"));
+                customer.setCardDetails(rs.getString("cardDetails"));
+            }
             stmt.close();
         } catch (SQLException exp) {
             exp.printStackTrace();
-        } catch (Exception exp) {
-            exp.printStackTrace();
         }
-
         return customer;
     }
-//    private Map<String, Customer> customers = new HashMap<>();
-//
-//
-//    public void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) {
-//        if (customers.containsKey(userName)) {
-//            System.out.println("User already exists.");
-//        }
-//        Customer customer = new Customer(UUID.randomUUID().toString(), userName, password, email, phoneNumber, cardNumber);
-//        customers.put(userName, customer);
-//    }
-//
-//    public boolean isUserValid(String userName, String password) {
-//        Customer customer = customers.get(userName);
-//        if (customer != null && customer.getPassword().equals(password)) {
-//            return true;
-//        } else {
-//            System.out.println("User is Invalid. Try again.");
-//            return false;
-//        }
-//    }
-//
-//    public Customer getCustomerById(String userName) {
-//        return customers.get(userName);
-//    }
-}
 
+    @Override
+    /**
+     * Change password.
+     * 
+     * @param userName    Username
+     * @param oldPassword Old Password
+     * @param newPassword New Password
+     * @return True if successful
+     */
+    public boolean changePassword(String userName, String oldPassword, String newPassword) {
+        try {
+            Connection conn = DatabaseConnector.connect();
+            // Using UPDATE_PASSWORD_QUERY: UPDATE Customer SET password = ? WHERE name = ?
+            // AND password = ?
+            PreparedStatement stmt = conn.prepareStatement(UPDATE_PASSWORD_QUERY);
+            stmt.setString(1, newPassword);
+            stmt.setString(2, userName);
+            stmt.setString(3, oldPassword);
+
+            int rowsUpdated = stmt.executeUpdate();
+            stmt.close();
+
+            return rowsUpdated > 0; // Returns true if the user existed and password matched
+        } catch (SQLException e) {
+            System.out.println("Database error during password change: " + e.getMessage());
+        }
+        return false;
+    }
+}

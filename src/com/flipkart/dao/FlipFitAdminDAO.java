@@ -5,28 +5,61 @@ import com.flipkart.bean.FlipFitGymOwner;
 
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) implementation for Admin operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
 
     private static FlipFitGymOwnerDAO flipFitGymOwnerDAO = new FlipFitGymOwnerDAO();
     private static FlipFitGymCenterDAO gymCentreDAO = new FlipFitGymCenterDAO();
 
-
+    /**
+     * Get pending gym owners.
+     * 
+     * @return List of pending gym owners
+     */
     public List<FlipFitGymOwner> getPendingGymOwners() {
         return flipFitGymOwnerDAO.getPendingGymOwnerList();
     }
 
+    /**
+     * Validate gym owner.
+     * 
+     * @param gymOwnerId Gym Owner ID
+     * @param isApproved Approval status
+     */
     public void validateGymOwner(String gymOwnerId, boolean isApproved) {
         flipFitGymOwnerDAO.validateGymOwner(gymOwnerId, isApproved);
     }
 
+    /**
+     * Validate gym center.
+     * 
+     * @param gymCentreId Gym Center ID
+     * @param isApproved  Approval status
+     */
     public void validateGymCentre(String gymCentreId, boolean isApproved) {
         gymCentreDAO.validateGymCentre(gymCentreId, isApproved);
     }
 
+    /**
+     * Get pending gym centers.
+     * 
+     * @return List of pending gym centers
+     */
     public List<FlipFitGymCenter> getPendingGymCentres() {
         return gymCentreDAO.getPendingGymCentreList();
     }
 
+    /**
+     * Register admin.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @param email    Email
+     */
     public void registerAdmin(String userName, String password, String email) {
         try {
             java.sql.Connection conn = com.flipkart.utils.DatabaseConnector.connect();
@@ -45,14 +78,22 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
         }
     }
 
+    /**
+     * Check if user is valid.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if valid
+     */
     public boolean isUserValid(String userName, String password) {
         try {
             java.sql.Connection conn = com.flipkart.utils.DatabaseConnector.connect();
-            java.sql.PreparedStatement stmt = conn.prepareStatement(com.flipkart.constants.SQLConstants.ADMIN_LOGIN_QUERY);
+            java.sql.PreparedStatement stmt = conn
+                    .prepareStatement(com.flipkart.constants.SQLConstants.ADMIN_LOGIN_QUERY);
             stmt.setString(1, userName);
             stmt.setString(2, password);
             java.sql.ResultSet rs = stmt.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 stmt.close();
                 return true;
             }
@@ -65,14 +106,21 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
         return false;
     }
 
+    /**
+     * Get Admin by ID.
+     * 
+     * @param userName Username
+     * @return Admin object
+     */
     public com.flipkart.bean.FlipFitAdmin getAdminById(String userName) {
         com.flipkart.bean.FlipFitAdmin admin = new com.flipkart.bean.FlipFitAdmin();
         try {
             java.sql.Connection conn = com.flipkart.utils.DatabaseConnector.connect();
-            java.sql.PreparedStatement stmt = conn.prepareStatement(com.flipkart.constants.SQLConstants.GET_ADMIN_BY_ID);
+            java.sql.PreparedStatement stmt = conn
+                    .prepareStatement(com.flipkart.constants.SQLConstants.GET_ADMIN_BY_ID);
             stmt.setString(1, userName);
             java.sql.ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 admin.setUserID(rs.getString("Id"));
                 admin.setUserName(rs.getString("name"));
                 admin.setPassword(rs.getString("password"));
@@ -87,6 +135,24 @@ public class FlipFitAdminDAO implements FlipFitAdminDAOInterface {
         }
 
         return admin;
+    }
+
+    /**
+     * Get all gym owners.
+     * 
+     * @return List of all gym owners
+     */
+    public List<FlipFitGymOwner> getAllGymOwners() {
+        return flipFitGymOwnerDAO.getGymOwnerList();
+    }
+
+    /**
+     * Get all gym centers.
+     * 
+     * @return List of all gym centers
+     */
+    public List<FlipFitGymCenter> getAllGymCenters() {
+        return gymCentreDAO.viewAllGymCenters();
     }
 
 }

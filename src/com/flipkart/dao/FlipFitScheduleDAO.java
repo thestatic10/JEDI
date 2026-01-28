@@ -14,8 +14,18 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Data Access Object (DAO) implementation for Schedule operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
 
+    /**
+     * Add schedule.
+     * 
+     * @param schedule Schedule object
+     */
     public void addSchedule(FlipFitSchedule schedule) {
         try {
             Connection conn = DatabaseConnector.connect();
@@ -32,6 +42,12 @@ public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
 
     }
 
+    /**
+     * Get schedule by ID.
+     * 
+     * @param scheduleId Schedule ID
+     * @return Schedule object
+     */
     public FlipFitSchedule getSchedule(String scheduleId) {
         FlipFitSchedule schedule = null;
         try {
@@ -53,10 +69,17 @@ public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
         return schedule;
     }
 
+    @Override
     public List<FlipFitSchedule> getAllScheduleByDate(java.sql.Date date) {
         return List.of();
     }
 
+    /**
+     * Get all schedules by date.
+     * 
+     * @param date Date
+     * @return List of schedules
+     */
     public List<FlipFitSchedule> getAllScheduleByDate(Date date) {
         ArrayList<FlipFitSchedule> response = new ArrayList<>();
         try {
@@ -81,6 +104,13 @@ public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
         return response;
     }
 
+    /**
+     * Modify schedule.
+     * 
+     * @param scheduleId Schedule ID
+     * @param action     Action
+     * @return True if successful
+     */
     public boolean modifySchedule(String scheduleId, int action) {
         // 1 for increasing, -1 for decreasing
         try {
@@ -98,43 +128,4 @@ public class FlipFitScheduleDAO implements FlipFitScheduleDAOInterface {
         }
         return true;
     }
-
-    // private Map<String, Schedule> scheduleMap = new HashMap<>();
-    //
-    // public void addSchedule(Schedule schedule) {
-    // if (scheduleMap.containsKey(schedule.getScheduleID())) {
-    // throw new RuntimeException("Schedule ID already exists");
-    // }
-    // scheduleMap.put(schedule.getScheduleID(), schedule);
-    // System.out.println("Schedule added successfully");
-    // }
-    //
-    // public Schedule getSchedule(String scheduleId) {
-    // return scheduleMap.get(scheduleId);
-    // }
-    //
-    // public List<Schedule> getAllScheduleByDate(Date date) {
-    // List<Schedule> response = new ArrayList<>();
-    // for (Schedule schedule : scheduleMap.values()) {
-    // if (schedule.getDate().equals(date)) {
-    // response.add(schedule);
-    // }
-    // }
-    // return response;
-    // }
-    //
-    // public boolean modifySchedule(String scheduleId, int action) {
-    // Schedule schedule = scheduleMap.get(scheduleId);
-    // if (schedule == null) {
-    // return false;
-    // }
-    //
-    // int availability = schedule.getAvailability();
-    // if (availability < 1 && action == -1) {
-    // return false;
-    // }
-    //
-    // schedule.setAvailability(availability + action);
-    // return true;
-    // }
 }

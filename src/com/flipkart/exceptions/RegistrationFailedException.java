@@ -5,9 +5,11 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 
 /**
  * Exception thrown when regisyration fails
+ * 
+ * @author gamma-group
  */
 public class RegistrationFailedException extends Exception {
     public RegistrationFailedException(String gymOwnerId) {
-        super(RED_COLOR+"Failed to register Gym Owner with id: " + gymOwnerId+RESET_COLOR);
+        super(RED_COLOR + "Failed to register Gym Owner with id: " + gymOwnerId + RESET_COLOR);
     }
 }

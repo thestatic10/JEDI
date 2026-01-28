@@ -10,8 +10,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Utility class for printing and date parsing.
+ * 
+ * @author gamma-group
+ */
 public class Util {
 
+    /**
+     * Print gym centers.
+     * 
+     * @param centreListByLocation List of gym centers
+     */
     public static void printGymCentres(List<FlipFitGymCenter> centreListByLocation) {
         System.out.println("-----");
         System.out.printf("%-8s\t", "Centre-ID");
@@ -23,7 +33,8 @@ public class Util {
         System.out.printf("%-8s\t", "PRICE");
         System.out.printf("%-8s\t\n", "APPROVED");
         System.out.println("-----");
-        for (FlipFitGymCenter gymCenter : centreListByLocation) {
+        // java
+        centreListByLocation.forEach(gymCenter -> {
             System.out.printf("%-8s\t", gymCenter.getGymCenterId());
             System.out.printf("%-8s\t", gymCenter.getOwnerID());
             System.out.printf("%-8s\t", gymCenter.getGymCenterName());
@@ -32,10 +43,16 @@ public class Util {
             System.out.printf("%-8s\t", gymCenter.getCapacity());
             System.out.printf("%-8s\t", gymCenter.getPrice());
             System.out.printf("%-8s\t\n", gymCenter.isApproved());
-        }
+        });
+
         System.out.println("-----");
     }
 
+    /**
+     * Print owner list.
+     * 
+     * @param gymOwnerList List of gym owners
+     */
     public static void printOwnerList(List<FlipFitGymOwner> gymOwnerList) {
         System.out.println("-----");
         System.out.printf("%-8s\t", "ID");
@@ -45,7 +62,7 @@ public class Util {
         System.out.printf("%23s\t\n", "IS-APPROVED");
         System.out.println("-----");
         System.out.println("");
-        for (FlipFitGymOwner gymOwner : gymOwnerList) {
+        gymOwnerList.forEach(gymOwner -> {
             System.out.printf("%-8s\t", gymOwner.getUserID());
             System.out.printf("%-8s\t", gymOwner.getUserName());
             System.out.printf("%-8s\t", gymOwner.getEmail());
@@ -57,10 +74,15 @@ public class Util {
             } else {
                 System.out.println("Pending\n");
             }
-        }
+        });
         System.out.println("----");
     }
 
+    /**
+     * Print customer profile.
+     * 
+     * @param customer Customer object
+     */
     public static void printCustomerProfile(FlipFitCustomer customer) {
         System.out.println("------------------------------------------------------------------------");
         System.out.println("USER ID: " + customer.getUserID());
@@ -71,18 +93,29 @@ public class Util {
         System.out.println("------------------------------------------------------------------------");
     }
 
+    /**
+     * Print slots.
+     * 
+     * @param slots List of slots
+     */
     public static void printSlots(List<FlipFitSlot> slots) {
         System.out.println("-----");
         System.out.printf("%-8s\t", "SLOT-ID");
         System.out.printf("%-8s\t\n", "SLOT-TIME");
         System.out.println("----");
-        for (FlipFitSlot slot : slots) {
+        slots.forEach(slot -> {
             System.out.printf("%-8s\t", slot.getSlotId());
             System.out.printf("%-8s\t\n", slot.getTime());
-        }
+        });
         System.out.println("----");
     }
 
+    /**
+     * Select date with input.
+     * 
+     * @return Date (java.util.Date)
+     * @throws ParseException If parsing fails
+     */
     public static Date selectDate() throws ParseException {
         System.out.print("Enter Date (dd/MM/yyyy): ");
         java.util.Scanner scanner = new java.util.Scanner(System.in);

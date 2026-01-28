@@ -2,6 +2,8 @@ package com.flipkart.bean;
 
 /**
  * Represents a gym center in the FlipFit system.
+ * 
+ * @author gamma-group
  */
 public class FlipFitGymCenter {
     private String gymCenterId;

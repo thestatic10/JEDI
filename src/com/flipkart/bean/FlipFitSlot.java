@@ -4,6 +4,8 @@ import java.time.LocalTime;
 
 /**
  * Represents a slot of a FlipFit GymCentre
+ * 
+ * @author gamma-group
  */
 
 public class FlipFitSlot {
@@ -13,9 +15,10 @@ public class FlipFitSlot {
 
     /**
      * Constructor for FlipFitSlot.
-     * @param slotId the ID of the slot
+     * 
+     * @param slotId   the ID of the slot
      * @param centerID the ID of the center where the slot is located
-     * @param time the time of the slot (LocalTime object)
+     * @param time     the time of the slot (LocalTime object)
      */
     public FlipFitSlot(String slotId, String centerID, LocalTime time) {
         this.slotId = slotId;
@@ -25,6 +28,7 @@ public class FlipFitSlot {
 
     /**
      * Getter for the slot ID.
+     * 
      * @return the slot ID
      */
     public String getSlotId() {
@@ -33,6 +37,7 @@ public class FlipFitSlot {
 
     /**
      * Setter for the slot ID.
+     * 
      * @param slotId the slot ID to set
      */
     public void setSlotId(String slotId) {
@@ -41,6 +46,7 @@ public class FlipFitSlot {
 
     /**
      * Getter for the center ID.
+     * 
      * @return the center ID
      */
     public String getCenterID() {
@@ -49,6 +55,7 @@ public class FlipFitSlot {
 
     /**
      * Setter for the center ID.
+     * 
      * @param centerID the center ID to set
      */
     public void setCenterID(String centerID) {
@@ -57,6 +64,7 @@ public class FlipFitSlot {
 
     /**
      * Getter for the time of the slot.
+     * 
      * @return the time of the slot (LocalTime object)
      */
     public LocalTime getTime() {
@@ -65,6 +73,7 @@ public class FlipFitSlot {
 
     /**
      * Setter for the time of the slot.
+     * 
      * @param time the time to set for the slot (LocalTime object)
      */
     public void setTime(LocalTime time) {

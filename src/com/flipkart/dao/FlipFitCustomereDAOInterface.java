@@ -5,35 +5,50 @@ import com.flipkart.exceptions.RegistrationFailedException;
 import com.flipkart.exceptions.UserInvalidException;
 
 /**
- * Data Access Object (DAO) interface for handling customer-related operations in FlipFit system.
- * This interface defines methods for registering customers, validating users, and retrieving customer details.
+ * Data Access Object (DAO) interface for Customer operations.
+ * 
+ * @author gamma-group
  */
 public interface FlipFitCustomereDAOInterface {
 
     /**
-     * Registers a new customer with the provided details.
-     * @param userName Username of the customer
-     * @param password Password of the customer
-     * @param email Email of the customer
-     * @param phoneNumber Phone number of the customer
-     * @param cardNumber Card number of the customer
-     * @throws RegistrationFailedException If registration fails for any reason
+     * Register customer.
+     * 
+     * @param userName    Username
+     * @param password    Password
+     * @param email       Email
+     * @param phoneNumber Phone Number
+     * @param cardNumber  Card Number
+     * @throws RegistrationFailedException If registration fails
      */
-    void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber) throws RegistrationFailedException;
+    void registerCustomer(String userName, String password, String email, String phoneNumber, String cardNumber)
+            throws RegistrationFailedException;
 
     /**
-     * Checks if a user with the given username and password is valid.
-     * @param userName Username of the user
-     * @param password Password of the user
-     * @return True if the user is valid, false otherwise
-     * @throws UserInvalidException If user validation fails
+     * Validates if a user is valid.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if valid
+     * @throws UserInvalidException If validation fails
      */
     boolean isUserValid(String userName, String password) throws UserInvalidException;
 
     /**
-     * Retrieves details of a customer based on their username.
-     * @param userName Username of the customer
-     * @return The FlipFitCustomer object
+     * Get customer by ID.
+     * 
+     * @param userName Username
+     * @return Customer object
      */
     FlipFitCustomer getCustomerById(String userName);
+
+    /**
+     * Updates the password in the database for a specific user.
+     * 
+     * @param userName    Username
+     * @param oldPassword Old Password
+     * @param newPassword New Password
+     * @return true if update was successful, false otherwise
+     */
+    boolean changePassword(String userName, String oldPassword, String newPassword);
 }

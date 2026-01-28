@@ -2,6 +2,8 @@ package com.flipkart.bean;
 
 /**
  * Represents a FlipFit User
+ * 
+ * @author gamma-group
  */
 
 public class FlipFitUser {
@@ -20,11 +22,12 @@ public class FlipFitUser {
 
     /**
      * Parameterized constructor for FlipFitUser.
-     * @param id the user ID
+     * 
+     * @param id       the user ID
      * @param userName the user name
-     * @param email the user's email address
+     * @param email    the user's email address
      * @param password the user's password
-     * @param role the user's role (FlipFitRole object)
+     * @param role     the user's role (FlipFitRole object)
      */
     public FlipFitUser(String id, String userName, String email, String password, FlipFitRole role) {
         this.userID = id;
@@ -36,6 +39,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user's role.
+     * 
      * @return the FlipFitRole object representing the user's role
      */
     public FlipFitRole getRole() {
@@ -44,6 +48,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user's role.
+     * 
      * @param role the FlipFitRole object to set
      */
     public void setRole(FlipFitRole role) {
@@ -52,6 +57,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user ID.
+     * 
      * @return the user ID
      */
     public String getUserID() {
@@ -60,6 +66,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user ID.
+     * 
      * @param userID the user ID to set
      */
     public void setUserID(String userID) {
@@ -68,6 +75,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user name.
+     * 
      * @return the user name
      */
     public String getUserName() {
@@ -76,6 +84,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user name.
+     * 
      * @param userName the user name to set
      */
     public void setUserName(String userName) {
@@ -84,6 +93,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user's email address.
+     * 
      * @return the user's email address
      */
     public String getEmail() {
@@ -92,6 +102,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user's email address.
+     * 
      * @param email the email address to set
      */
     public void setEmail(String email) {
@@ -100,6 +111,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user's password.
+     * 
      * @return the user's password
      */
     public String getPassword() {
@@ -108,6 +120,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user's password.
+     * 
      * @param password the password to set
      */
     public void setPassword(String password) {
@@ -115,7 +128,9 @@ public class FlipFitUser {
     }
 
     /**
-     * Override of the toString() method to provide a string representation of the object.
+     * Override of the toString() method to provide a string representation of the
+     * object.
+     * 
      * @return a string representation of the FlipFitUser object
      */
     @Override
@@ -131,6 +146,7 @@ public class FlipFitUser {
 
     /**
      * Setter for the user's email address.
+     * 
      * @param email the email address to set
      */
     public void setEmailId(String email) {
@@ -139,6 +155,7 @@ public class FlipFitUser {
 
     /**
      * Getter for the user's email address.
+     * 
      * @return the user's email address
      */
     public String getEmailId() {

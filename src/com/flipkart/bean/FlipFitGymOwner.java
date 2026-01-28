@@ -4,8 +4,11 @@ import java.util.List;
 
 /**
  * Represents a gym owner in the FlipFit system, extending FlipFitUser.
- * Contains owner-specific details such as PAN number, associated gym center IDs,
+ * Contains owner-specific details such as PAN number, associated gym center
+ * IDs,
  * card details, and approval status.
+ * 
+ * @author gamma-group
  */
 public class FlipFitGymOwner extends FlipFitUser {
     private String panNumber;
@@ -22,14 +25,16 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Parameterized constructor to initialize gym owner details.
-     * @param id User ID of the gym owner
-     * @param userName Username of the gym owner
-     * @param email Email of the gym owner
-     * @param password Password of the gym owner
-     * @param panNumber PAN number of the gym owner
+     * 
+     * @param id          User ID of the gym owner
+     * @param userName    Username of the gym owner
+     * @param email       Email of the gym owner
+     * @param password    Password of the gym owner
+     * @param panNumber   PAN number of the gym owner
      * @param cardDetails Card details of the gym owner
      */
-    public FlipFitGymOwner(String id, String userName, String email, String password, String panNumber, String cardDetails) {
+    public FlipFitGymOwner(String id, String userName, String email, String password, String panNumber,
+            String cardDetails) {
         super(id, userName, email, password, FlipFitRole.GYM_OWNER);
         this.panNumber = panNumber;
         this.cardDetails = cardDetails;
@@ -38,6 +43,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Retrieves the PAN number of the gym owner.
+     * 
      * @return PAN number of the gym owner
      */
     public String getPanNumber() {
@@ -46,6 +52,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Sets the PAN number of the gym owner.
+     * 
      * @param panNumber PAN number to set
      */
     public void setPanNumber(String panNumber) {
@@ -54,6 +61,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Retrieves the list of gym center IDs associated with the gym owner.
+     * 
      * @return List of gym center IDs
      */
     public List<String> getGymCentreIDs() {
@@ -62,6 +70,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Sets the list of gym center IDs associated with the gym owner.
+     * 
      * @param gymCentreIDs List of gym center IDs to set
      */
     public void setGymCentreIDs(List<String> gymCentreIDs) {
@@ -70,6 +79,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Adds a gym center ID to the list associated with the gym owner.
+     * 
      * @param gymCentreId Gym center ID to add
      */
     public void addGymCentreId(String gymCentreId) {
@@ -78,6 +88,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Retrieves the card details of the gym owner.
+     * 
      * @return Card details of the gym owner
      */
     public String getCardDetails() {
@@ -86,6 +97,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Sets the card details of the gym owner.
+     * 
      * @param cardDetails Card details to set
      */
     public void setCardDetails(String cardDetails) {
@@ -94,6 +106,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Checks if the gym owner is approved.
+     * 
      * @return True if the gym owner is approved, false otherwise
      */
     public boolean isApproved() {
@@ -102,6 +115,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Sets the approval status of the gym owner.
+     * 
      * @param approved Approval status to set
      */
     public void setApproved(boolean approved) {
@@ -110,6 +124,7 @@ public class FlipFitGymOwner extends FlipFitUser {
 
     /**
      * Overrides the getUserID method from the parent class.
+     * 
      * @return User ID of the gym owner
      */
     public String getUserID() {

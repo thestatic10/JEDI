@@ -5,10 +5,12 @@ import static com.flipkart.constants.Constants.RESET_COLOR;
 
 /**
  * Exception thrown when Login fails
+ * 
+ * @author gamma-group
  */
-public class LoginFailedException extends RuntimeException{
-    public LoginFailedException(String message){
+public class LoginFailedException extends RuntimeException {
+    public LoginFailedException(String message) {
         super(message);
-        System.out.println(RED_COLOR+"Unable to login, Check your username and password"+RESET_COLOR);
+        System.out.println(RED_COLOR + "Unable to login, Check your username and password" + RESET_COLOR);
     }
 }

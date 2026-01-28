@@ -14,14 +14,27 @@ import java.sql.SQLException;
 
 import static com.flipkart.constants.SQLConstants.*;
 
+/**
+ * Data Access Object (DAO) implementation for Gym Center operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
 
     private Connection conn = null;
     private PreparedStatement statement = null;
 
+    /**
+     * Constructor.
+     */
     public FlipFitGymCenterDAO() {
     }
 
+    /**
+     * View all gym centers.
+     * 
+     * @return List of all gym centers
+     */
     public List<FlipFitGymCenter> viewAllGymCenters() {
         List<FlipFitGymCenter> allGymCentres = new ArrayList<>();
         try {
@@ -55,7 +68,12 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         return List.of();
     }
 
-    // api call to retrieve all gym centres and status
+    /**
+     * Get all centers by owner ID.
+     * 
+     * @param gymOwnerId Gym Owner ID
+     * @return List of gym centers
+     */
     public List<FlipFitGymCenter> getAllCentresByOwmerId(String gymOwnerId) {
 
         List<FlipFitGymCenter> allGymCentres = new ArrayList<>();
@@ -88,6 +106,12 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         return allGymCentres;
     }
 
+    /**
+     * Get gym center by ID.
+     * 
+     * @param gymCentreId Gym Center ID
+     * @return Gym Center object
+     */
     public FlipFitGymCenter getGymCentreByCentreId(String gymCentreId) {
         FlipFitGymCenter gymCentre = new FlipFitGymCenter();
         try {
@@ -115,6 +139,11 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
 
     }
 
+    /**
+     * Add gym center.
+     * 
+     * @param centre Gym Center object
+     */
     public void addGymCentre(FlipFitGymCenter centre) {
         // call to db api
         try {
@@ -141,6 +170,11 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         }
     }
 
+    /**
+     * Get pending gym center list.
+     * 
+     * @return List of pending gym centers
+     */
     public List<FlipFitGymCenter> getPendingGymCentreList() {
         List<FlipFitGymCenter> pendingList = new ArrayList<>();
         try {
@@ -172,6 +206,12 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         return pendingList;
     }
 
+    /**
+     * Validate gym center.
+     * 
+     * @param gymCentreId Gym Center ID
+     * @param isApproved  Approval status
+     */
     public void validateGymCentre(String gymCentreId, boolean isApproved) {
         // System.out.println("IN VALIDATE GYM CENTRE");
         try {
@@ -190,18 +230,13 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             // Handle errors for Class.forName
             e.printStackTrace();
         }
-        // for(GymCentre gymCentre : gymCentreList) {
-        // if(gymCentre.getGymCentreID().equals(gymCentreId)) {
-        // gymCentre.setApproved(isApproved);
-        // }
-        // }
-        // for(GymCentre gymCentre : pendingGymCentreList) {
-        // if(gymCentre.getGymCentreID().equals(gymCentreId)) {
-        // pendingGymCentreList.remove(gymCentre);
-        // }
-        // }
     }
 
+    /**
+     * Send centre approval request.
+     * 
+     * @param gymCentreId Gym Center ID
+     */
     public void sendCentreApprovalRequest(String gymCentreId) {
         try {
             conn = DatabaseConnector.connect();
@@ -220,6 +255,12 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
         }
     }
 
+    /**
+     * Get gym center list by city.
+     * 
+     * @param city City
+     * @return List of gym centers
+     */
     public List<FlipFitGymCenter> getGymCentreListByCity(String city) {
         List<FlipFitGymCenter> allCentreByCity = new ArrayList<>();
         try {
@@ -250,65 +291,6 @@ public class FlipFitGymCenterDAO implements FlipFitGymCentreDAOInterface {
             // Handle errors for Class.forName
             e.printStackTrace();
         }
-        // for(GymCentre gymCentre: gymCentreList){
-        // if(gymCentre.getCity().equals(city)){
-        // allCentreByCity.add(gymCentre);
-        // }
-        // }
         return allCentreByCity;
     }
-    // private Map<String, GymCenter> gymCentres = new HashMap<>();
-    // private Map<String, List<GymCenter>> ownerGyms = new HashMap<>();
-    //
-    // public GymCenterDAO() {
-    // }
-    //
-    // public List<GymCenter> getAllCentresByOwnerId(String gymOwnerId) {
-    // return ownerGyms.getOrDefault(gymOwnerId, new ArrayList<>());
-    // }
-    //
-    // public GymCenter getGymCentreByCentreId(String gymCentreId) {
-    // return gymCentres.get(gymCentreId);
-    // }
-    //
-    // public void addGymCentre(GymCenter centre) {
-    // gymCentres.put(centre.getGymCenterId(), centre);
-    // ownerGyms.computeIfAbsent(centre.getOwnerID(), k -> new
-    // ArrayList<>()).add(centre);
-    // }
-    //
-    // public List<GymCenter> getPendingGymCentreList() {
-    // List<GymCenter> pendingList = new ArrayList<>();
-    // for (GymCenter centre : gymCentres.values()) {
-    // if (!centre.isApproved()) {
-    // pendingList.add(centre);
-    // }
-    // }
-    // return pendingList;
-    // }
-    //
-    // public void validateGymCentre(String gymCentreId, boolean isApproved) {
-    // GymCenter centre = gymCentres.get(gymCentreId);
-    // if (centre != null) {
-    // centre.setApproved(isApproved);
-    // }
-    // }
-    //
-    // public void sendCenterApprovalRequest(String gymCentreId) {
-    // GymCenter centre = gymCentres.get(gymCentreId);
-    // if (centre != null) {
-    // centre.setApproved(true);
-    // System.out.println("Gym Center Approved!");
-    // }
-    // }
-    //
-    // public List<GymCenter> getGymCentreListByCity(String city) {
-    // List<GymCenter> allCentreByCity = new ArrayList<>();
-    // for (GymCenter centre : gymCentres.values()) {
-    // if (centre.getCity().equalsIgnoreCase(city)) {
-    // allCentreByCity.add(centre);
-    // }
-    // }
-    // return allCentreByCity;
-    // }
 }

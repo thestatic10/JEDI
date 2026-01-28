@@ -13,12 +13,24 @@ import java.util.List;
 import static com.flipkart.client.FlipFitApplication.scanner;
 import static com.flipkart.utils.Util.*;
 
+/**
+ * Menu class for Gym Owner operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitGymOwnerMenu {
 
     private FlipFitGymOwnerInterface gymOwnerService = new FlipFitGymOwnerService();
     private FlipFitSlotInterface slotService = new FlipFitSlotService();
     private FlipFitGymCenterInterface gymCentreService = new FlipFitGymCenterService();
 
+    /**
+     * Gym owner login.
+     * 
+     * @param userName Username
+     * @param password Password
+     * @return True if successful
+     */
     public boolean gymOwnerLogin(String userName, String password) {
         if (gymOwnerService.loginGymOwner(userName, password)) {
             System.out.println("Successfully logged in");
@@ -29,6 +41,9 @@ public class FlipFitGymOwnerMenu {
         return true;
     }
 
+    /**
+     * Register gym owner.
+     */
     public void register() {
         System.out.println("Enter your Username");
         String userName = scanner.next();
@@ -49,12 +64,18 @@ public class FlipFitGymOwnerMenu {
         gymOwnerClientMainPage(userName);
     }
 
+    /**
+     * Gym owner client main page.
+     * 
+     * @param gymOwnerId Gym Owner ID
+     */
     public void gymOwnerClientMainPage(String gymOwnerId) {
         LocalDateTime currentTime = LocalDateTime.now();
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formattedDate = currentTime.format(myFormat);
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm:ss");
         System.out.println(
-                "Welcome " + gymOwnerId + " !!\nPlease choose from the following options\nLogin TIME: " + currentTime);
+                "Welcome " + gymOwnerId + " !!\nPlease choose from the following options\nLogin Date: "
+                        + currentTime.format(dateFormat) + "\nLogin Time: " + currentTime.format(timeFormat));
         while (true) {
             System.out.println("" +
                     "0. View all Gym Centres\n" +

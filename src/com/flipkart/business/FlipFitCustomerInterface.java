@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Interface defining operations related to customers in the FlipFit system.
+ * 
+ * @author gamma-group
  */
 public interface FlipFitCustomerInterface {
 

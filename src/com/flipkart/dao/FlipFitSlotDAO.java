@@ -14,18 +14,28 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Data Access Object (DAO) implementation for Slot operations.
+ * 
+ * @author gamma-group
+ */
 public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
 
-    public FlipFitSlotDAO(){
+    public FlipFitSlotDAO() {
     }
 
+    /**
+     * Get slot list.
+     * 
+     * @return List of slots
+     */
     public List<FlipFitSlot> getSlotList() {
         List<FlipFitSlot> slotList = new ArrayList<>();
-        try{
+        try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(SQLConstants.FETCH_ALL_SLOTS);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String slotId = rs.getString("slotId");
                 String centreId = rs.getString("centreId");
                 LocalTime time = rs.getTime("time").toLocalTime();
@@ -39,14 +49,20 @@ public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
         return slotList;
     }
 
-    public List<FlipFitSlot> getSlotByCentreId(String gymCentreId){
+    /**
+     * Get slot by center ID.
+     * 
+     * @param gymCentreId Gym Center ID
+     * @return List of slots
+     */
+    public List<FlipFitSlot> getSlotByCentreId(String gymCentreId) {
         List<FlipFitSlot> slotList = new ArrayList<>();
-        try{
+        try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(SQLConstants.FETCH_SLOT_BY_CENTRE);
-            ps.setString(1,gymCentreId);
+            ps.setString(1, gymCentreId);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String slotId = rs.getString("slotId");
                 String centreId = rs.getString("centreId");
                 LocalTime time = rs.getTime("time").toLocalTime();
@@ -60,8 +76,13 @@ public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
         return slotList;
     }
 
-    public void addSlot(FlipFitSlot slot){
-        try{
+    /**
+     * Add slot.
+     * 
+     * @param slot Slot object
+     */
+    public void addSlot(FlipFitSlot slot) {
+        try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(SQLConstants.ADD_SLOT);
             ps.setString(1, slot.getSlotId());
@@ -73,14 +94,20 @@ public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
         }
     }
 
+    /**
+     * Get slot by ID.
+     * 
+     * @param slotID Slot ID
+     * @return Slot object
+     */
     public FlipFitSlot getSlotById(String slotID) {
         FlipFitSlot slot = null;
-        try{
+        try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(SQLConstants.FETCH_SLOT_BY_ID);
-            ps.setString(1,slotID);
+            ps.setString(1, slotID);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 String centreId = rs.getString("centreId");
                 LocalTime time = rs.getTime("time").toLocalTime();
                 slot = new FlipFitSlot(slotID, centreId, time);
@@ -93,15 +120,22 @@ public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
         return slot;
     }
 
+    /**
+     * Get slot by ID and Center ID.
+     * 
+     * @param slotID   Slot ID
+     * @param centreID Center ID
+     * @return Slot object
+     */
     public FlipFitSlot getSlotByIdandCentreId(String slotID, String centreID) {
         FlipFitSlot slot = null;
-        try{
+        try {
             Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(SQLConstants.FETCH_SLOT_BY_ID_AND_CENTRE_ID);
-            ps.setString(1,slotID);
-            ps.setString(2,centreID);
+            ps.setString(1, slotID);
+            ps.setString(2, centreID);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 LocalTime time = rs.getTime("time").toLocalTime();
                 slot = new FlipFitSlot(slotID, centreID, time);
             }
@@ -112,42 +146,4 @@ public class FlipFitSlotDAO implements FlipFitSlotDAOInterface {
 
         return slot;
     }
-//    private Map<String, Slot> slotMap = new HashMap<>();
-//
-//    public SlotDAO() {
-//    }
-//
-//    public List<Slot> getSlotList() {
-//        return new ArrayList<>(slotMap.values());
-//    }
-//
-//    public List<Slot> getSlotByCentreId(String gymCentreId) {
-//        List<Slot> slotList = new ArrayList<>();
-//        for (Slot slot : slotMap.values()) {
-//            if (slot.getCenterID().equals(gymCentreId)) {
-//                slotList.add(slot);
-//            }
-//        }
-//        return slotList;
-//    }
-//
-//    public void addSlot(Slot slot) {
-//        if (slotMap.containsKey(slot.getSlotId())) {
-//            throw new RuntimeException("Slot ID already exists");
-//        }
-//        slotMap.put(slot.getSlotId(), slot);
-//        System.out.println("Slot added successfully");
-//    }
-//
-//    public Slot getSlotById(String slotID) {
-//        return slotMap.get(slotID);
-//    }
-//
-//    public Slot getSlotByIdandCentreId(String slotID, String centreID) {
-//        Slot slot = slotMap.get(slotID);
-//        if (slot != null && slot.getCenterID().equals(centreID)) {
-//            return slot;
-//        }
-//        return null;
-//    }
 }
